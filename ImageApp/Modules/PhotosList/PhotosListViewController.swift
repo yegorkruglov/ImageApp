@@ -11,6 +11,16 @@ final class PhotosListViewController: UIViewController {
     
     weak var coordinator: AppCoordinator?
     
+    var searchHistoryElements: [String] = [
+        "asd",
+        "asdasdasdasdasd",
+        "aasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsd",
+        "asdasd",
+        "asd",
+        "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+        "asd"
+    ]
+    
     private var isGridLayout: Bool = false
     
     private(set) lazy var searchController: UISearchController = {
@@ -18,7 +28,7 @@ final class PhotosListViewController: UIViewController {
         return sc
     }()
 
-    private lazy var collectionView: UICollectionView = {
+    private(set) lazy var photosCollectionView: UICollectionView = {
         let cv = UICollectionView(
             frame: .zero,
             collectionViewLayout: makeCollectionViewLayout()
@@ -31,6 +41,18 @@ final class PhotosListViewController: UIViewController {
         return cv
     }()
     
+    private(set) lazy var searchSuggestionsTableView: UITableView = {
+        let tv = UITableView(frame: .zero)
+        tv.register(SearchSuggestionCell.self, forCellReuseIdentifier: SearchSuggestionCell.identifier)
+        tv.dataSource = self
+        tv.delegate = self
+        tv.separatorStyle = .none
+        tv.alpha = 0
+        tv.estimatedRowHeight = 1
+        tv.backgroundColor = .systemGray6
+        return tv
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
@@ -38,13 +60,13 @@ final class PhotosListViewController: UIViewController {
     
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.1) {
             self.view.layoutIfNeeded()
         }
     }
 }
 
-extension PhotosListViewController {
+private extension PhotosListViewController {
     func makeCollectionViewLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(
             widthDimension: .fractionalWidth(isGridLayout ? 1 : 1/2),
@@ -79,8 +101,10 @@ extension PhotosListViewController {
     }
     
     func addViews() {
-        view.addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        [photosCollectionView, searchSuggestionsTableView].forEach { subview in
+            view.addSubview(subview)
+            subview.translatesAutoresizingMaskIntoConstraints = false
+        }
     }
     
     func setupViews() {
@@ -91,14 +115,16 @@ extension PhotosListViewController {
     }
     
     func makeConstraints() {
-        NSLayoutConstraint.activate(
-            [
-                collectionView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 16),
-                collectionView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -16),
-                collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
-                collectionView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
-            ]
-        )
+        [photosCollectionView, searchSuggestionsTableView].forEach { subview in
+            NSLayoutConstraint.activate(
+                [
+                    subview.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 16),
+                    subview.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -16),
+                    subview.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+                    subview.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+                ]
+            )
+        }
     }
     
     func setupGridSwitch() {
@@ -112,7 +138,7 @@ extension PhotosListViewController {
             handler: { [weak self] _ in
                 guard let self else { return }
                 isGridLayout.toggle()
-                collectionView.setCollectionViewLayout(makeCollectionViewLayout(), animated: true)
+                photosCollectionView.setCollectionViewLayout(makeCollectionViewLayout(), animated: true)
                 gridSwitch.image = imageProvider
             }
         )
