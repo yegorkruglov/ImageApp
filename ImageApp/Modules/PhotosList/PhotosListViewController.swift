@@ -7,13 +7,15 @@
 
 import UIKit
 
+typealias PhotosSnapshot = NSDiffableDataSourceSnapshot<PhotosListViewController.PhotosCollectionViewSection, Photo>
+
 final class PhotosListViewController: UIViewController {
     
     // MARK: - dependencies
     
     private weak var coordinator: AppCoordinator?
     private let interactor: PhotosListInteractorProtocol
-
+    
     // MARK: - ui elements
     
     private var isGridLayout: Bool = false
@@ -22,14 +24,30 @@ final class PhotosListViewController: UIViewController {
         let sc = UISearchController()
         return sc
     }()
-
+    
+    private var cellRegistration: UICollectionView.CellRegistration<PhotoCell, Photo> = {
+        UICollectionView.CellRegistration { cell, _, photo in
+            cell.configureWith(photo)
+        }
+    }()
+    
+    private lazy var photosDataSource: UICollectionViewDiffableDataSource<PhotosCollectionViewSection, Photo> = {
+        UICollectionViewDiffableDataSource(collectionView: photosCollectionView) {
+            [unowned self] collectionView, indexPath, organization in
+            let cell = collectionView.dequeueConfiguredReusableCell(
+                using: cellRegistration,
+                for: indexPath,
+                item: organization
+            )
+            return cell
+        }
+    }()
+    
     private(set) lazy var photosCollectionView: UICollectionView = {
         let cv = UICollectionView(
             frame: .zero,
             collectionViewLayout: makeCollectionViewLayout()
         )
-        cv.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.identifier)
-        cv.dataSource = self
         cv.delegate = self
         cv.backgroundColor = .clear
         cv.layer.cornerRadius = 16
@@ -54,7 +72,7 @@ final class PhotosListViewController: UIViewController {
         self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
-
+    
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -73,6 +91,12 @@ final class PhotosListViewController: UIViewController {
         UIView.animate(withDuration: 0.1) {
             self.view.layoutIfNeeded()
         }
+    }
+}
+
+extension PhotosListViewController {
+    func display(_ snapshot: PhotosSnapshot) {
+        photosDataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
@@ -122,6 +146,7 @@ private extension PhotosListViewController {
         title = "Feed"
         setupGridSwitch()
         setupSearchController()
+        setupPhotosCollectionViewDatasource()
     }
     
     func makeConstraints() {
@@ -166,5 +191,14 @@ private extension PhotosListViewController {
         
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    func setupPhotosCollectionViewDatasource() {
+        var dataSourceSnapshot: NSDiffableDataSourceSnapshot<PhotosCollectionViewSection, Photo> = .init()
+        dataSourceSnapshot.appendSections([.main])
+        dataSourceSnapshot.appendItems([], toSection: .main)
+
+        photosDataSource.apply(dataSourceSnapshot)
+        photosCollectionView.dataSource = photosDataSource
     }
 }

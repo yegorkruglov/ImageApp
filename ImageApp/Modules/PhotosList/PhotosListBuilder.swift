@@ -19,6 +19,7 @@ final class PhotosListBuilder {
         let imageService = ImageService(api: api)
         let interactor = PhotosListInteractor(presentrer: presenter, imageService: imageService)
         let viewController = PhotosListViewController(interactor: interactor)
+        presenter.viewController = viewController
         
         return viewController
     }

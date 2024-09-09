@@ -28,7 +28,10 @@ final class PhotoCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupUI() {
+    func configureWith(_ photo: Photo) {
+        
+    }
+    private func setupUI() {
         addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate(
