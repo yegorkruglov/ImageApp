@@ -9,7 +9,7 @@ import UIKit
 
 extension PhotosListViewController: UISearchControllerDelegate {
     func willPresentSearchController(_ searchController: UISearchController) {
-        searchHistoryElements = searchQueriesService.getSavedQueries()
+//        searchHistoryElements = searchQueriesService.getSavedQueries()
         searchSuggestionsTableView.reloadData()
         UIView.animate(withDuration: 0.3) {
             self.photosCollectionView.alpha = 0

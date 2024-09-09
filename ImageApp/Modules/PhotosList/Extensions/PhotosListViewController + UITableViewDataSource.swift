@@ -9,7 +9,8 @@ import UIKit
 
 extension PhotosListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        searchHistoryElements.count
+//        searchHistoryElements.count
+        0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -20,7 +21,7 @@ extension PhotosListViewController: UITableViewDataSource {
             ) as? SearchSuggestionCell
         else { return UITableViewCell() }
         
-        cell.configureWith(text: searchHistoryElements[indexPath.row])
+//        cell.configureWith(text: searchHistoryElements[indexPath.row])
         return cell
     }
 }

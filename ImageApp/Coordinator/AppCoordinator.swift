@@ -36,7 +36,7 @@ final class AppCoordinator: Coordinator {
             searchQueriesService: searchQueriesService
         )
         
-        let photoListVC = PhotosListViewController(input: input)
+        let photoListVC = PhotosListBuilder.build()
         
         navigationController.pushViewController(photoListVC, animated: true)
     }

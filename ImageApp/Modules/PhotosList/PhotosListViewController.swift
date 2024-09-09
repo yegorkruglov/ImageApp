@@ -12,9 +12,9 @@ final class PhotosListViewController: UIViewController {
     // MARK: - dependencies
     
     private weak var coordinator: AppCoordinator?
-    let searchQueriesService: SearchQueriesServiceProtocol
-    
-    var searchHistoryElements: [String] = []
+    private let interactor: PhotosListInteractorProtocol
+
+    // MARK: - ui elements
     
     private var isGridLayout: Bool = false
     
@@ -50,12 +50,11 @@ final class PhotosListViewController: UIViewController {
     
     // MARK: - initilizer
     
-    init(input: PhotosListViewController.Input) {
-        coordinator = input.coordinator
-        searchQueriesService = input.searchQueriesService
+    init(interactor: PhotosListInteractorProtocol) {
+        self.interactor = interactor
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
