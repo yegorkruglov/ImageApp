@@ -9,17 +9,12 @@ import UIKit
 
 final class PhotosListViewController: UIViewController {
     
-    weak var coordinator: AppCoordinator?
+    // MARK: - dependencies
     
-    var searchHistoryElements: [String] = [
-        "asd",
-        "asdasdasdasdasd",
-        "aasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdsd",
-        "asdasd",
-        "asd",
-        "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
-        "asd"
-    ]
+    private weak var coordinator: AppCoordinator?
+    let searchQueriesService: SearchQueriesServiceProtocol
+    
+    var searchHistoryElements: [String] = []
     
     private var isGridLayout: Bool = false
     
@@ -52,6 +47,21 @@ final class PhotosListViewController: UIViewController {
         tv.backgroundColor = .systemGray6
         return tv
     }()
+    
+    // MARK: - initilizer
+    
+    init(input: PhotosListViewController.Input) {
+        coordinator = input.coordinator
+        searchQueriesService = input.searchQueriesService
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    // MARK: - lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
