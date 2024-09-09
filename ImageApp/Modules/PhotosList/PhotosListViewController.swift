@@ -65,6 +65,7 @@ final class PhotosListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        interactor.viewDidLoad()
     }
     
     override func viewSafeAreaInsetsDidChange() {

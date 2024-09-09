@@ -25,16 +25,11 @@ final class AppCoordinator: Coordinator {
     }
     
     func showPhotoList() {
-        let searchQueriesService = SearchQueriesService(
-            searchKey: "recentSearches",
-            maxQueries: 5,
-            userDefaults: UserDefaults.standard
-        )
-        
-        let input = PhotosListViewController.Input(
-            coordinator: self,
-            searchQueriesService: searchQueriesService
-        )
+//        let searchQueriesService = SearchQueriesService(
+//            searchKey: "recentSearches",
+//            maxQueries: 5,
+//            userDefaults: UserDefaults.standard
+//        )
         
         let photoListVC = PhotosListBuilder.build()
         

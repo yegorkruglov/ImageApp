@@ -10,7 +10,14 @@ import Foundation
 final class PhotosListBuilder {
     static func build() -> PhotosListViewController{
         let presenter = PhotosListPresenter()
-        let interactor = PhotosListInteractor(presentrer: presenter)
+        let networker = Networker(session: URLSession.shared, decoder: JSONDecoder())
+        let api = UnsplashApi(
+            networker: networker,
+            baseUrl: "https://api.unsplash.com/",
+            token: ""
+        )
+        let imageService = ImageService(api: api)
+        let interactor = PhotosListInteractor(presentrer: presenter, imageService: imageService)
         let viewController = PhotosListViewController(interactor: interactor)
         
         return viewController
