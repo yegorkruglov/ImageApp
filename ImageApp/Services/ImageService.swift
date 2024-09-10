@@ -23,6 +23,7 @@ final class ImageService: ImageServiceProtocol {
     func showRandomPhotos() async throws -> [Photo] {
         try await api.getRandomPhotos()
     }
+    
     func loadImageFor(_ urlString: String) async throws -> Data {
         if let savedData = storageService.loadDataFor(urlString) {
             return savedData

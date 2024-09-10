@@ -15,10 +15,14 @@ extension PhotosListViewController: UISearchBarDelegate {
         
         // network job
         
-        self.searchController.isActive = false
+        toggleViews(showPhotos: true)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         interactor.getSavedQueries(filteredBy: searchText)
+    }
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        toggleViews(showPhotos: false)
     }
 }

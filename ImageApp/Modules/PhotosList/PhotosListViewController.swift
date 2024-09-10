@@ -117,8 +117,16 @@ extension PhotosListViewController {
     func display(_ snapshot: PhotosSnapshot) {
         photosDataSource.apply(snapshot, animatingDifferences: true)
     }
+    
     func display(_ snapshot: QueriesSnapshot) {
         searchQueriesDataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    func toggleViews(showPhotos: Bool) {
+        UIView.animate(withDuration: 0.3) {
+            self.photosCollectionView.alpha = showPhotos ? 1 : 0
+            self.searchSuggestionsTableView.alpha = showPhotos ? 0 : 1
+        }
     }
 }
 
@@ -207,7 +215,6 @@ private extension PhotosListViewController {
     
     func setupSearchController() {
         searchController.delegate = self
-        searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search for images"
