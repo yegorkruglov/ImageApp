@@ -44,7 +44,10 @@ final class UnsplashApi: PhotoApiProtocol {
             }
         }
         var urlComponents = URLComponents(string: urlString)
-        urlComponents?.queryItems = request.parameters.map { URLQueryItem(name: $0, value: $1) }
+        
+        if request == .loadRandomPhotos {
+            urlComponents?.queryItems = request.parameters.map { URLQueryItem(name: $0, value: $1) }
+        }
         
         guard let url = urlComponents?.url else { throw NetworkError.invalidUrl }
         
@@ -60,7 +63,7 @@ final class UnsplashApi: PhotoApiProtocol {
 }
 
 extension UnsplashApi {
-    enum Request {
+    enum Request: Equatable {
         case loadRandomPhotos
         case loadImageDataFrom(String)
         case search(query: String)
