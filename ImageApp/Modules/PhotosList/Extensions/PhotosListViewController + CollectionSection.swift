@@ -8,7 +8,7 @@
 import Foundation
 
 extension PhotosListViewController {
-    enum PhotosCollectionViewSection {
+    enum Sections {
         case main
     }
 }

@@ -19,7 +19,16 @@ final class PhotosListBuilder {
         let fileManager = FileManager.default
         let storageManger = StorageService(fileManager: fileManager)
         let imageService = ImageService(api: api, storageService: storageManger)
-        let interactor = PhotosListInteractor(presentrer: presenter, imageService: imageService)
+        let searchQueriesService = SearchQueriesService(
+            searchKey: "searchQueries",
+            maxQueries: 5,
+            userDefaults: UserDefaults.standard
+        )
+        let interactor = PhotosListInteractor(
+            presentrer: presenter,
+            imageService: imageService,
+            searchQueriesService: searchQueriesService
+        )
         let viewController = PhotosListViewController(interactor: interactor)
         presenter.viewController = viewController
         

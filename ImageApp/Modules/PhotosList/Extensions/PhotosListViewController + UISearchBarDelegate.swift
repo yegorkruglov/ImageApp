@@ -11,10 +11,14 @@ extension PhotosListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text, !text.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty else { return }
         
-//        self.searchQueriesService.saveQuery(text)
+        self.interactor.saveSearchQuery(text)
         
         // network job
         
         self.searchController.isActive = false
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        interactor.getSavedQueries(filteredBy: searchText)
     }
 }

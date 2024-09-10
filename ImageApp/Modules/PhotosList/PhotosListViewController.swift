@@ -7,35 +7,39 @@
 
 import UIKit
 
-typealias PhotosSnapshot = NSDiffableDataSourceSnapshot<PhotosListViewController.PhotosCollectionViewSection, Photo>
+typealias PhotosSnapshot = NSDiffableDataSourceSnapshot<PhotosListViewController.Sections, Photo>
+typealias QueriesSnapshot = NSDiffableDataSourceSnapshot<PhotosListViewController.Sections, String>
+
 
 final class PhotosListViewController: UIViewController {
     
     // MARK: - dependencies
     
+    let interactor: PhotosListInteractorProtocol
     private weak var coordinator: AppCoordinator?
-    private let interactor: PhotosListInteractorProtocol
     
     // MARK: - ui elements
     
+    var isFetchingMoreData: Bool = false
     private var isGridLayout: Bool = false
+    private var isRandomPhotosMode: Bool = true
     
     private(set) lazy var searchController: UISearchController = {
         let sc = UISearchController()
         return sc
     }()
     
-    private var cellRegistration: UICollectionView.CellRegistration<PhotoCell, Photo> = {
+    private var collectionViewCellRegistration: UICollectionView.CellRegistration<PhotoCell, Photo> = {
         UICollectionView.CellRegistration { cell, _, photo in
             cell.configureWith(photo)
         }
     }()
     
-    private lazy var photosDataSource: UICollectionViewDiffableDataSource<PhotosCollectionViewSection, Photo> = {
+    private lazy var photosDataSource: UICollectionViewDiffableDataSource<Sections, Photo> = {
         UICollectionViewDiffableDataSource(collectionView: photosCollectionView) {
             [unowned self] collectionView, indexPath, organization in
             let cell = collectionView.dequeueConfiguredReusableCell(
-                using: cellRegistration,
+                using: collectionViewCellRegistration,
                 for: indexPath,
                 item: organization
             )
@@ -55,10 +59,24 @@ final class PhotosListViewController: UIViewController {
         return cv
     }()
     
+    private(set) lazy var searchQueriesDataSource: UITableViewDiffableDataSource<Sections, String> = {
+        UITableViewDiffableDataSource(tableView: searchSuggestionsTableView) {
+            [unowned self] tableView, indexPath, query in
+            guard
+                let cell = tableView.dequeueReusableCell(
+                    withIdentifier: SearchSuggestionCell.identifier,
+                    for: indexPath
+                ) as? SearchSuggestionCell
+            else { return UITableViewCell() }
+            cell.configureWith(text: query)
+            return cell
+        }
+        
+    }()
+    
     private(set) lazy var searchSuggestionsTableView: UITableView = {
         let tv = UITableView(frame: .zero)
         tv.register(SearchSuggestionCell.self, forCellReuseIdentifier: SearchSuggestionCell.identifier)
-        tv.dataSource = self
         tv.delegate = self
         tv.separatorStyle = .none
         tv.alpha = 0
@@ -98,6 +116,9 @@ final class PhotosListViewController: UIViewController {
 extension PhotosListViewController {
     func display(_ snapshot: PhotosSnapshot) {
         photosDataSource.apply(snapshot, animatingDifferences: true)
+    }
+    func display(_ snapshot: QueriesSnapshot) {
+        searchQueriesDataSource.apply(snapshot, animatingDifferences: true)
     }
 }
 
@@ -148,6 +169,7 @@ private extension PhotosListViewController {
         setupGridSwitch()
         setupSearchController()
         setupPhotosCollectionViewDatasource()
+        setupSearcQueriesTableViewDatasource()
     }
     
     func makeConstraints() {
@@ -195,11 +217,20 @@ private extension PhotosListViewController {
     }
     
     func setupPhotosCollectionViewDatasource() {
-        var dataSourceSnapshot: NSDiffableDataSourceSnapshot<PhotosCollectionViewSection, Photo> = .init()
+        var dataSourceSnapshot: NSDiffableDataSourceSnapshot<Sections, Photo> = .init()
         dataSourceSnapshot.appendSections([.main])
         dataSourceSnapshot.appendItems([], toSection: .main)
 
         photosDataSource.apply(dataSourceSnapshot)
         photosCollectionView.dataSource = photosDataSource
+    }
+    
+    func setupSearcQueriesTableViewDatasource() {
+        var dataSourceSnapshot: NSDiffableDataSourceSnapshot<Sections, String> = .init()
+        dataSourceSnapshot.appendSections([.main])
+        dataSourceSnapshot.appendItems([], toSection: .main)
+
+        searchQueriesDataSource.apply(dataSourceSnapshot)
+        searchSuggestionsTableView.dataSource = searchQueriesDataSource
     }
 }

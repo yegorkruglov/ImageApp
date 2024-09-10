@@ -8,5 +8,7 @@
 import UIKit
 
 extension PhotosListViewController: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        searchController.searchBar.text = searchQueriesDataSource.itemIdentifier(for: indexPath)
+    }
 }
