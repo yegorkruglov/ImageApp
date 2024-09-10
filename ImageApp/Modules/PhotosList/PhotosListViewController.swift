@@ -34,6 +34,11 @@ final class PhotosListViewController: UIViewController {
             cell.configureWith(photo)
         }
     }()
+    private var collectionSupplementaryRegistration: UICollectionView.SupplementaryRegistration<LoadingFooterView> = {
+        UICollectionView.SupplementaryRegistration(elementKind: UICollectionView.elementKindSectionFooter) { supplementaryView, elementKind, indexPath in
+            supplementaryView.startLoading()
+        }
+    }()
     
     private lazy var photosDataSource: UICollectionViewDiffableDataSource<Sections, Photo> = {
         UICollectionViewDiffableDataSource(collectionView: photosCollectionView) {
@@ -155,6 +160,17 @@ private extension PhotosListViewController {
         
         section.interGroupSpacing = 16
         
+        let footerSize = NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .absolute(50)
+        )
+        let footer = NSCollectionLayoutBoundarySupplementaryItem(
+            layoutSize: footerSize,
+            elementKind: UICollectionView.elementKindSectionFooter,
+            alignment: .bottom
+        )
+        section.boundarySupplementaryItems = [footer]
+        
         return UICollectionViewCompositionalLayout(section: section)
     }
     
@@ -227,8 +243,19 @@ private extension PhotosListViewController {
         var dataSourceSnapshot: NSDiffableDataSourceSnapshot<Sections, Photo> = .init()
         dataSourceSnapshot.appendSections([.main])
         dataSourceSnapshot.appendItems([], toSection: .main)
-
+        
         photosDataSource.apply(dataSourceSnapshot)
+        photosDataSource.supplementaryViewProvider = { [unowned self] (collectionView, kind, indexPath) in
+            if kind == UICollectionView.elementKindSectionFooter {
+                let footer = collectionView.dequeueConfiguredReusableSupplementary(
+                    using: collectionSupplementaryRegistration, 
+                    for: indexPath
+                )
+                footer.startLoading()
+                return footer
+            }
+            return nil
+        }
         photosCollectionView.dataSource = photosDataSource
     }
     
@@ -236,7 +263,7 @@ private extension PhotosListViewController {
         var dataSourceSnapshot: NSDiffableDataSourceSnapshot<Sections, String> = .init()
         dataSourceSnapshot.appendSections([.main])
         dataSourceSnapshot.appendItems([], toSection: .main)
-
+        
         searchQueriesDataSource.apply(dataSourceSnapshot)
         searchSuggestionsTableView.dataSource = searchQueriesDataSource
     }
