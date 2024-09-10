@@ -24,10 +24,14 @@ final class PhotoCell: UICollectionViewCell {
     }()
     private lazy var nameLabel: UILabel = {
         let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .footnote)
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     private lazy var authorLabel: UILabel = {
         let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .caption2)
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     private lazy var stackView: UIStackView = {
@@ -36,6 +40,8 @@ final class PhotoCell: UICollectionViewCell {
         stack.axis = .vertical
         stack.spacing = 4
         stack.distribution = .fill
+        stack.isLayoutMarginsRelativeArrangement = true
+        stack.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)
         return stack
     }()
     
@@ -57,7 +63,6 @@ final class PhotoCell: UICollectionViewCell {
         imageView.image = nil
         nameLabel.text = nil
         authorLabel.text = nil
-        #warning("update constraints")
     }
     
     func configureWith(_ photo: Photo) {
@@ -73,7 +78,6 @@ final class PhotoCell: UICollectionViewCell {
             subview.translatesAutoresizingMaskIntoConstraints = false
             
         }
-        let stackViewHeight: CGFloat = self.bounds.height / 3
         
         NSLayoutConstraint.activate(
             [
@@ -81,7 +85,6 @@ final class PhotoCell: UICollectionViewCell {
                 imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
                 imageView.leftAnchor.constraint(equalTo: self.leftAnchor),
                 imageView.rightAnchor.constraint(equalTo: self.rightAnchor),
-                stackView.heightAnchor.constraint(equalToConstant: stackViewHeight),
                 stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
                 stackView.leftAnchor.constraint(equalTo: self.leftAnchor),
                 stackView.rightAnchor.constraint(equalTo: self.rightAnchor)
