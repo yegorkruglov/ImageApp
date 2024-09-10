@@ -6,10 +6,11 @@
 //
 
 import Foundation
-protocol PhotosListInteractorProtocol {
+
+protocol PhotosListInteractorProtocol: ImageProviderProtocol {
     func viewDidLoad()
-    func loadImageFor(_ urlString: String) async throws -> Data
 }
+
 final class PhotosListInteractor: PhotosListInteractorProtocol {
     private let presentrer: PhotosListPresenterProtocol
     private let imageService: ImageServiceProtocol
@@ -29,7 +30,9 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
             }
         }
     }
-    
+}
+
+extension PhotosListInteractor: ImageProviderProtocol {
     func loadImageFor(_ urlString: String) async throws -> Data {
         let imageData = try await imageService.loadImageFor(urlString)
         return imageData

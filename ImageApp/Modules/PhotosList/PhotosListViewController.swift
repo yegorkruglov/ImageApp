@@ -39,6 +39,7 @@ final class PhotosListViewController: UIViewController {
                 for: indexPath,
                 item: organization
             )
+            cell.imageProvider = interactor
             return cell
         }
     }()
