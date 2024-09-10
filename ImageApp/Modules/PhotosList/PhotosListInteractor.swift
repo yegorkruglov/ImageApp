@@ -8,6 +8,7 @@
 import Foundation
 protocol PhotosListInteractorProtocol {
     func viewDidLoad()
+    func loadImageFor(_ urlString: String) async throws -> Data
 }
 final class PhotosListInteractor: PhotosListInteractorProtocol {
     private let presentrer: PhotosListPresenterProtocol
@@ -27,5 +28,10 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
                 await presentrer.process(error)
             }
         }
+    }
+    
+    func loadImageFor(_ urlString: String) async throws -> Data {
+        let imageData = try await imageService.loadImageFor(urlString)
+        return imageData
     }
 }

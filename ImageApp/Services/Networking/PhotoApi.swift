@@ -9,6 +9,7 @@ import Foundation
 
 protocol PhotoApiProtocol {
     func getRandomPhotos() async throws -> [Photo]
+    func loadImageDataFor(_ urlString: String) async throws -> Data
 }
 
 final class UnsplashApi: PhotoApiProtocol {
@@ -28,8 +29,21 @@ final class UnsplashApi: PhotoApiProtocol {
         return photos
     }
     
+    func loadImageDataFor(_ urlString: String) async throws -> Data {
+        let urlRequest = try prepareUrlRequest(to: .loadImageDataFrom(urlString))
+        return try await networker.perfomRequest(urlRequest)
+    }
+    
     private func prepareUrlRequest(to request: UnsplashApi.Request) throws -> URLRequest {
-        var urlComponents = URLComponents(string: baseUrl + request.endpoint)
+        var urlString: String {
+            switch request {
+            case let .loadImageDataFrom(urlString):
+                urlString
+            default:
+                baseUrl + request.endpoint
+            }
+        }
+        var urlComponents = URLComponents(string: urlString)
         urlComponents?.queryItems = request.parameters.map { URLQueryItem(name: $0, value: $1) }
         
         guard let url = urlComponents?.url else { throw NetworkError.invalidUrl }
@@ -48,6 +62,7 @@ final class UnsplashApi: PhotoApiProtocol {
 extension UnsplashApi {
     enum Request {
         case loadRandomPhotos
+        case loadImageDataFrom(String)
         case search(query: String)
         
         var httpMethod: String { "GET" }
@@ -58,6 +73,8 @@ extension UnsplashApi {
                 "photos/random"
             case let .search(query):
                 "\(query)"
+            case .loadImageDataFrom(_):
+                String()
             }
         }
         
@@ -65,7 +82,7 @@ extension UnsplashApi {
             switch self {
             case .loadRandomPhotos:
                 [:]
-            case .search(_):
+            case .search(_), .loadImageDataFrom(_):
                 [:]
             }
         }
@@ -74,7 +91,7 @@ extension UnsplashApi {
             switch self {
             case .loadRandomPhotos:
                 ["count": "30"]
-            case .search(_):
+            case .search(_), .loadImageDataFrom(_):
                 [:]
             }
         }

@@ -16,7 +16,9 @@ final class PhotosListBuilder {
             baseUrl: "https://api.unsplash.com/",
             token: ""
         )
-        let imageService = ImageService(api: api)
+        let fileManager = FileManager.default
+        let storageManger = StorageService(fileManager: fileManager)
+        let imageService = ImageService(api: api, storageService: storageManger)
         let interactor = PhotosListInteractor(presentrer: presenter, imageService: imageService)
         let viewController = PhotosListViewController(interactor: interactor)
         presenter.viewController = viewController

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D11C00E2C904B140054E1A4 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D11C00D2C904B140054E1A4 /* StorageService.swift */; };
 		5D3DDE752C8C8CB700E532BB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3DDE742C8C8CB700E532BB /* AppDelegate.swift */; };
 		5D3DDE772C8C8CB700E532BB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3DDE762C8C8CB700E532BB /* SceneDelegate.swift */; };
 		5D3DDE792C8C8CB700E532BB /* PhotosListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3DDE782C8C8CB700E532BB /* PhotosListViewController.swift */; };
@@ -37,6 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5D11C00D2C904B140054E1A4 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageService.swift; path = ImageApp/Services/StorageService/StorageService.swift; sourceTree = "<group>"; };
 		5D3DDE712C8C8CB700E532BB /* ImageApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D3DDE742C8C8CB700E532BB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5D3DDE762C8C8CB700E532BB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		5D3DDE682C8C8CB700E532BB = {
 			isa = PBXGroup;
 			children = (
+				5D11C00D2C904B140054E1A4 /* StorageService.swift */,
 				5D3DDE732C8C8CB700E532BB /* ImageApp */,
 				5D3DDE722C8C8CB700E532BB /* Products */,
 			);
@@ -311,6 +314,7 @@
 				5DADCA022C8F3EFE007EBFEF /* Networker.swift in Sources */,
 				5DA6E1032C8DCF27004C175D /* PhotosListViewController + UISearchControllerDelegate.swift in Sources */,
 				5D3DDE972C8CA2D400E532BB /* PhotoCell.swift in Sources */,
+				5D11C00E2C904B140054E1A4 /* StorageService.swift in Sources */,
 				5D3DDE952C8CA19700E532BB /* UICollectionViewCell + Extension.swift in Sources */,
 				5DA6E1012C8DCF1C004C175D /* PhotosListViewController + UISearchResultsUpdating.swift in Sources */,
 				5D3DDE8E2C8C910500E532BB /* AppCoordinator.swift in Sources */,
