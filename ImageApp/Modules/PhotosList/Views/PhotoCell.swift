@@ -14,6 +14,8 @@ protocol ImageProviderProtocol: AnyObject {
 final class PhotoCell: UICollectionViewCell {
     weak var imageProvider: ImageProviderProtocol?
     
+    private var urlString: String?
+    
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
@@ -51,6 +53,7 @@ final class PhotoCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageProvider = nil
+        urlString = nil
         imageView.image = nil
         nameLabel.text = nil
         authorLabel.text = nil
@@ -61,6 +64,7 @@ final class PhotoCell: UICollectionViewCell {
         nameLabel.text = photo.description
         authorLabel.text = "by \(photo.user?.username ?? "unknown user")"
         guard let urlString = photo.urls?.thumb else { return }
+        self.urlString = urlString
         setImage(urlString)
     }
     private func setupUI() {
@@ -91,7 +95,9 @@ final class PhotoCell: UICollectionViewCell {
         Task {
             guard let imageData = try await imageProvider?.loadImageFor(urlString) else { return }
             await MainActor.run {
-                imageView.image = UIImage(data: imageData)
+                if urlString == self.urlString {
+                    imageView.image = UIImage(data: imageData)
+                }
             }
         }
     }
