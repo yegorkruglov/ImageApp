@@ -21,6 +21,7 @@ final class PhotosListViewController: UIViewController {
     // MARK: - ui elements
     
     var isFetchingMoreData: Bool = true
+    var isMorePhotosAvailable: Bool = true
     private var isGridLayout: Bool = true
     
     private(set) lazy var searchController: UISearchController = {
@@ -118,8 +119,12 @@ final class PhotosListViewController: UIViewController {
 }
 
 extension PhotosListViewController {
-    func display(_ snapshot: PhotosSnapshot) {
+    func display(_ snapshot: PhotosSnapshot, morePhotosAvailable: Bool) {
         photosDataSource.apply(snapshot, animatingDifferences: true)
+        if !morePhotosAvailable {
+            isFetchingMoreData = false
+            updateLayout()
+        }
     }
     
     func display(_ snapshot: QueriesSnapshot) {

@@ -9,7 +9,7 @@ import UIKit
 
 protocol PhotosListPresenterProtocol {
     var viewController: PhotosListViewController? { get }
-    func process(_ photos: [Photo]) async
+    func process(_ photos: [Photo], morePhotosAvailable: Bool) async 
     func process(_ error: Error) async
     func process(_ savedQueries: [String])
 }
@@ -17,9 +17,9 @@ protocol PhotosListPresenterProtocol {
 final class PhotosListPresenter: PhotosListPresenterProtocol {
     weak var viewController: PhotosListViewController?
     
-    func process(_ photos: [Photo]) async {
+    func process(_ photos: [Photo], morePhotosAvailable: Bool) async {
         let snapshot = await prepareSnapshotForDisplay(from: photos)
-        await viewController?.display(snapshot)
+        await viewController?.display(snapshot, morePhotosAvailable: morePhotosAvailable)
     }
     
     func process(_ savedQueries: [String]) {

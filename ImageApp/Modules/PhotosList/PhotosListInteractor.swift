@@ -34,7 +34,7 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
         Task {
             do {
                 let photos = try await imageService.showRandomPhotos()
-                await presentrer.process(photos)
+                await presentrer.process(photos, morePhotosAvailable: true)
             } catch {
                 await presentrer.process(error)
             }
@@ -46,7 +46,7 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
             do {
                 let searchResult = try await imageService.searchPhotosMatching(query, page: pageToDownload)
                 
-                await presentrer.process(searchResult.results)
+                await presentrer.process(searchResult.results, morePhotosAvailable: true)
             } catch {
                 await presentrer.process(error)
             }
