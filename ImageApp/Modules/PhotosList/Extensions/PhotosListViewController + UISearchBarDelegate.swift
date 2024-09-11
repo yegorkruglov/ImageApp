@@ -26,6 +26,12 @@ extension PhotosListViewController: UISearchBarDelegate {
         toggleViews(showPhotos: true)
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        drainPhotosDataSource()
+        toggleViews(showPhotos: true)
+        interactor.reloadRandoms()
+    }
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         interactor.getSavedQueries(filteredBy: searchText)
     }

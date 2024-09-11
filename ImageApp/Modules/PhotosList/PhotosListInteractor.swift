@@ -12,6 +12,7 @@ protocol PhotosListInteractorProtocol: ImageProviderProtocol {
     func getSavedQueries(filteredBy text: String?)
     func loadMoreRandomPhotos()
     func loadMorePhotosFor(query: String?)
+    func reloadRandoms()
 }
 
 final class PhotosListInteractor: PhotosListInteractorProtocol {
@@ -60,8 +61,12 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
             do {
                 let photos = try await imageService.loadRandomPhotos()
                 await MainActor.run {
-                    for photo in photos {
-                        if !randomPhotos.contains(photo) { randomPhotos.append(photo) }
+                    if !randomPhotos.isEmpty {
+                        for photo in photos {
+                            if !randomPhotos.contains(photo) { randomPhotos.append(photo) }
+                        }
+                    } else {
+                        randomPhotos = photos
                     }
                 }
                 await presentrer.process(randomPhotos, isMorePhotosAvailable: true)
@@ -99,6 +104,15 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
                 await presentrer.process(error)
             }
         }
+    }
+    
+    func reloadRandoms() {
+        randomPhotos = []
+        queryPhotos = []
+        lastQuery = nil
+        pageToDownload = 1
+        totalPages = nil
+        loadMoreRandomPhotos()
     }
 }
 
