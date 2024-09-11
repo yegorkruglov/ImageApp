@@ -33,7 +33,7 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
     func viewDidLoad() {
         Task {
             do {
-                let photos = try await imageService.showRandomPhotos()
+                let photos = try await imageService.loadRandomPhotos()
                 await presentrer.process(photos, morePhotosAvailable: true)
             } catch {
                 await presentrer.process(error)
