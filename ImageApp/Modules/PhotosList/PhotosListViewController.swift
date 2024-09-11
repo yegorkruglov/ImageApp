@@ -20,10 +20,8 @@ final class PhotosListViewController: UIViewController {
     
     // MARK: - ui elements
     
-    var isFetchingMoreData: Bool = false
-    private var isGridLayout: Bool = false
-    private var shouldShowFooterActivityIndicator: Bool = true
-    private var isRandomPhotosMode: Bool = true
+    var isFetchingMoreData: Bool = true
+    private var isGridLayout: Bool = true
     
     private(set) lazy var searchController: UISearchController = {
         let sc = UISearchController()
@@ -143,17 +141,18 @@ extension PhotosListViewController {
         photosDataSource.apply(snapshot, animatingDifferences: true)
     }
     
-    func footerActivityIndicator(shouldHide: Bool) {
-        shouldShowFooterActivityIndicator = !shouldHide
+    func updateLayout() {
         photosCollectionView.setCollectionViewLayout(makeCollectionViewLayout(), animated: true)
     }
 }
 
 private extension PhotosListViewController {
     func makeCollectionViewLayout() -> UICollectionViewLayout {
+        let itemRatio: CGFloat = isGridLayout ? 1/2 : 1
+        
         let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(isGridLayout ? 1 : 1/2),
-            heightDimension: .fractionalWidth(isGridLayout ? 1 : 1/2)
+            widthDimension: .fractionalWidth(itemRatio),
+            heightDimension: .fractionalWidth(itemRatio)
         )
         
         let groupSize = NSCollectionLayoutSize(
@@ -174,7 +173,7 @@ private extension PhotosListViewController {
         
         section.interGroupSpacing = 16
         
-        if shouldShowFooterActivityIndicator {
+        if isFetchingMoreData {
             let footerSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(50)
@@ -227,7 +226,11 @@ private extension PhotosListViewController {
     
     func setupGridSwitch() {
         var imageProvider: UIImage? {
-            isGridLayout ? UIImage(systemName: "square.grid.2x2.fill") : UIImage(systemName: "square.stack.fill")
+            UIImage(
+                systemName: isGridLayout
+                ? "square.stack.fill"
+                : "square.grid.2x2.fill"
+            )
         }
         
         let gridSwitch: UIBarButtonItem = UIBarButtonItem()
@@ -236,7 +239,7 @@ private extension PhotosListViewController {
             handler: { [weak self] _ in
                 guard let self else { return }
                 isGridLayout.toggle()
-                photosCollectionView.setCollectionViewLayout(makeCollectionViewLayout(), animated: true)
+                updateLayout()
                 gridSwitch.image = imageProvider
             }
         )
