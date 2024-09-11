@@ -7,10 +7,6 @@
 
 import UIKit
 
-typealias PhotosSnapshot = NSDiffableDataSourceSnapshot<PhotosListViewController.Sections, Photo>
-typealias QueriesSnapshot = NSDiffableDataSourceSnapshot<PhotosListViewController.Sections, String>
-
-
 final class PhotosListViewController: UIViewController {
     
     // MARK: - dependencies
