@@ -12,7 +12,7 @@ final class PhotosListViewController: UIViewController {
     // MARK: - dependencies
     
     let interactor: PhotosListInteractorProtocol
-    private weak var coordinator: AppCoordinator?
+    weak var coordinator: AppCoordinator?
     
     // MARK: - ui elements
     
@@ -36,7 +36,7 @@ final class PhotosListViewController: UIViewController {
         }
     }()
     
-    private lazy var photosDataSource: UICollectionViewDiffableDataSource<Sections, Photo> = {
+    private(set) lazy var photosDataSource: UICollectionViewDiffableDataSource<Sections, Photo> = {
         UICollectionViewDiffableDataSource(collectionView: photosCollectionView) {
             [unowned self] collectionView, indexPath, organization in
             let cell = collectionView.dequeueConfiguredReusableCell(
@@ -48,7 +48,6 @@ final class PhotosListViewController: UIViewController {
             return cell
         }
     }()
-    
     private(set) lazy var photosCollectionView: UICollectionView = {
         let cv = UICollectionView(
             frame: .zero,
@@ -59,7 +58,6 @@ final class PhotosListViewController: UIViewController {
         cv.layer.cornerRadius = 16
         return cv
     }()
-    
     private(set) lazy var searchQueriesDataSource: UITableViewDiffableDataSource<Sections, String> = {
         UITableViewDiffableDataSource(tableView: searchSuggestionsTableView) {
             [unowned self] tableView, indexPath, query in
@@ -74,7 +72,6 @@ final class PhotosListViewController: UIViewController {
         }
         
     }()
-    
     private(set) lazy var searchSuggestionsTableView: UITableView = {
         let tv = UITableView(frame: .zero)
         tv.register(SearchSuggestionCell.self, forCellReuseIdentifier: SearchSuggestionCell.identifier)

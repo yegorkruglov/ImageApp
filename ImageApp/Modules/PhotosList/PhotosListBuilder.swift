@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class PhotosListBuilder {
+enum PhotosListBuilder {
     static func build() -> PhotosListViewController{
         let presenter = PhotosListPresenter()
         let decoder = {

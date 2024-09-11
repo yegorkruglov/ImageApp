@@ -29,4 +29,9 @@ extension PhotosListViewController: UICollectionViewDelegate {
         ? interactor.loadMorePhotosFor(query: formattedQuery)
         : interactor.loadMoreRandomPhotos()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let photo = photosDataSource.itemIdentifier(for: indexPath) else { return }
+        self.coordinator?.showPhotoDetailsFor(photo)
+    }
 }

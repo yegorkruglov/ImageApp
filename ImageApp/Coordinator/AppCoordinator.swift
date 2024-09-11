@@ -11,6 +11,8 @@ protocol Coordinator {
     var navigationController: UINavigationController { get set }
     
     func start()
+    func showPhotoList()
+    func showPhotoDetailsFor(_ photo: Photo)
 }
 
 final class AppCoordinator: Coordinator {
@@ -25,14 +27,17 @@ final class AppCoordinator: Coordinator {
     }
     
     func showPhotoList() {
-//        let searchQueriesService = SearchQueriesService(
-//            searchKey: "recentSearches",
-//            maxQueries: 5,
-//            userDefaults: UserDefaults.standard
-//        )
-        
         let photoListVC = PhotosListBuilder.build()
+        photoListVC.coordinator = self
         
         navigationController.pushViewController(photoListVC, animated: true)
+    }
+    
+    func showPhotoDetailsFor(_ photo: Photo) {
+        let photoDetailsVC = PhotoDetailsBuilder.build()
+        photoDetailsVC.coordinator = self
+        photoDetailsVC.configureWith(photo)
+        
+        navigationController.pushViewController(photoDetailsVC, animated: true)
     }
 }

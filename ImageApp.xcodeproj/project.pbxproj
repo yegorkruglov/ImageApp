@@ -20,6 +20,9 @@
 		5D3DDE952C8CA19700E532BB /* UICollectionViewCell + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3DDE942C8CA19700E532BB /* UICollectionViewCell + Extension.swift */; };
 		5D3DDE972C8CA2D400E532BB /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3DDE962C8CA2D400E532BB /* PhotoCell.swift */; };
 		5D43589C2C91F6BE001E60C1 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D43589B2C91F6BE001E60C1 /* AppError.swift */; };
+		5D43589E2C920BA3001E60C1 /* PhotoDetailsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D43589D2C920BA3001E60C1 /* PhotoDetailsBuilder.swift */; };
+		5D4358A02C920C1F001E60C1 /* PhotoDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D43589F2C920C1F001E60C1 /* PhotoDetailsInteractor.swift */; };
+		5D4358A22C920C53001E60C1 /* PhotoDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4358A12C920C53001E60C1 /* PhotoDetailsPresenter.swift */; };
 		5D8AD4E32C8DFEF1007F1026 /* SearchQueriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AD4E22C8DFEF1007F1026 /* SearchQueriesService.swift */; };
 		5DA6E0FD2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA6E0FC2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift */; };
 		5DA6E0FF2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA6E0FE2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift */; };
@@ -53,6 +56,9 @@
 		5D3DDE942C8CA19700E532BB /* UICollectionViewCell + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell + Extension.swift"; sourceTree = "<group>"; };
 		5D3DDE962C8CA2D400E532BB /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		5D43589B2C91F6BE001E60C1 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		5D43589D2C920BA3001E60C1 /* PhotoDetailsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsBuilder.swift; sourceTree = "<group>"; };
+		5D43589F2C920C1F001E60C1 /* PhotoDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsInteractor.swift; sourceTree = "<group>"; };
+		5D4358A12C920C53001E60C1 /* PhotoDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsPresenter.swift; sourceTree = "<group>"; };
 		5D8AD4E22C8DFEF1007F1026 /* SearchQueriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueriesService.swift; sourceTree = "<group>"; };
 		5DA6E0FC2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosListViewController + UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		5DA6E0FE2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosListViewController + UISearchBarDelegate.swift"; sourceTree = "<group>"; };
@@ -172,7 +178,10 @@
 		5D3DDE902C8C953200E532BB /* PhotosDeatils */ = {
 			isa = PBXGroup;
 			children = (
+				5D43589D2C920BA3001E60C1 /* PhotoDetailsBuilder.swift */,
 				5D3DDE912C8C954F00E532BB /* PhotosDetailsViewController.swift */,
+				5D43589F2C920C1F001E60C1 /* PhotoDetailsInteractor.swift */,
+				5D4358A12C920C53001E60C1 /* PhotoDetailsPresenter.swift */,
 			);
 			path = PhotosDeatils;
 			sourceTree = "<group>";
@@ -190,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				5D43589B2C91F6BE001E60C1 /* AppError.swift */,
+				5DADCA032C8F4028007EBFEF /* NetworkError.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -240,7 +250,6 @@
 			children = (
 				5DADC9FF2C8F3B99007EBFEF /* PhotoApi.swift */,
 				5DADCA012C8F3EFE007EBFEF /* Networker.swift */,
-				5DADCA032C8F4028007EBFEF /* NetworkError.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -321,6 +330,8 @@
 				5DADCA022C8F3EFE007EBFEF /* Networker.swift in Sources */,
 				5D43589C2C91F6BE001E60C1 /* AppError.swift in Sources */,
 				5DA6E1032C8DCF27004C175D /* PhotosListViewController + UISearchControllerDelegate.swift in Sources */,
+				5D4358A22C920C53001E60C1 /* PhotoDetailsPresenter.swift in Sources */,
+				5D4358A02C920C1F001E60C1 /* PhotoDetailsInteractor.swift in Sources */,
 				5D3DDE972C8CA2D400E532BB /* PhotoCell.swift in Sources */,
 				5D11C00E2C904B140054E1A4 /* StorageService.swift in Sources */,
 				5D3DDE952C8CA19700E532BB /* UICollectionViewCell + Extension.swift in Sources */,
@@ -332,6 +343,7 @@
 				5D11C0182C90C8F20054E1A4 /* LoadingFooterView.swift in Sources */,
 				5D3DDE772C8C8CB700E532BB /* SceneDelegate.swift in Sources */,
 				5DADC9FD2C8F3AFD007EBFEF /* Photo.swift in Sources */,
+				5D43589E2C920BA3001E60C1 /* PhotoDetailsBuilder.swift in Sources */,
 				5DA6E0FF2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift in Sources */,
 				5DADC9F62C8F3291007EBFEF /* PhotosListInteractor.swift in Sources */,
 				5D11C0162C90C7250054E1A4 /* PhotosListViewController + Models.swift in Sources */,
