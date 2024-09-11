@@ -9,6 +9,7 @@ import UIKit
 
 protocol Coordinator {
     var navigationController: UINavigationController { get set }
+    var dependencies: Dependecies { get set }
     
     func start()
     func showPhotoList()
@@ -17,9 +18,11 @@ protocol Coordinator {
 
 final class AppCoordinator: Coordinator {
     var navigationController: UINavigationController
+    var dependencies: Dependecies
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, dependencies: Dependecies) {
         self.navigationController = navigationController
+        self.dependencies = dependencies
     }
     
     func start() {
@@ -27,14 +30,14 @@ final class AppCoordinator: Coordinator {
     }
     
     func showPhotoList() {
-        let photoListVC = PhotosListBuilder.build()
+        let photoListVC = PhotosListBuilder.build(dependecies: dependencies)
         photoListVC.coordinator = self
         
         navigationController.pushViewController(photoListVC, animated: true)
     }
     
     func showPhotoDetailsFor(_ photo: Photo) {
-        let photoDetailsVC = PhotoDetailsBuilder.build()
+        let photoDetailsVC = PhotoDetailsBuilder.build(dependencies: dependencies)
         photoDetailsVC.coordinator = self
         photoDetailsVC.configureWith(photo)
         

@@ -8,9 +8,12 @@
 import Foundation
 
 enum PhotoDetailsBuilder {
-    static func build() -> PhotosDetailsViewController {
+    static func build(dependencies: Dependecies) -> PhotosDetailsViewController {
         let presenter = PhotoDetailsPresenter()
-        let interactor = PhotoDetailsInteractor(presenter: presenter)
+        let interactor = PhotoDetailsInteractor(
+            presenter: presenter,
+            imageService: dependencies.imageService
+        )
         let vc = PhotosDetailsViewController(interactor: interactor)
         presenter.viewController = vc
         return vc

@@ -8,31 +8,12 @@
 import Foundation
 
 enum PhotosListBuilder {
-    static func build() -> PhotosListViewController{
+    static func build(dependecies: Dependecies) -> PhotosListViewController{
         let presenter = PhotosListPresenter()
-        let decoder = {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            return decoder
-        }()
-        let networker = Networker(session: URLSession.shared, decoder: decoder)
-        let api = UnsplashApi(
-            networker: networker,
-            baseUrl: "https://api.unsplash.com/",
-            token: "zyXBhcA4JPT4gNCyFIMH3ioM-q0wUijpAowZHsrQ7HA"
-        )
-        let fileManager = FileManager.default
-        let storageManger = StorageService(fileManager: fileManager)
-        let imageService = ImageService(api: api, storageService: storageManger)
-        let searchQueriesService = SearchQueriesService(
-            searchKey: "searchQueries",
-            maxQueries: 5,
-            userDefaults: UserDefaults.standard
-        )
         let interactor = PhotosListInteractor(
             presentrer: presenter,
-            imageService: imageService,
-            searchQueriesService: searchQueriesService
+            imageService: dependecies.imageService,
+            searchQueriesService: dependecies.searchQueriesService
         )
         let viewController = PhotosListViewController(interactor: interactor)
         presenter.viewController = viewController

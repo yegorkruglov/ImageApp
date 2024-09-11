@@ -34,10 +34,12 @@
 		5DADC9F62C8F3291007EBFEF /* PhotosListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADC9F52C8F3291007EBFEF /* PhotosListInteractor.swift */; };
 		5DADC9F82C8F32B0007EBFEF /* PhotosListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADC9F72C8F32B0007EBFEF /* PhotosListPresenter.swift */; };
 		5DADC9FA2C8F3949007EBFEF /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADC9F92C8F3949007EBFEF /* ImageService.swift */; };
-		5DADC9FD2C8F3AFD007EBFEF /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADC9FC2C8F3AFD007EBFEF /* Photo.swift */; };
+		5DADC9FD2C8F3AFD007EBFEF /* UnsplashDtos.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADC9FC2C8F3AFD007EBFEF /* UnsplashDtos.swift */; };
 		5DADCA002C8F3B99007EBFEF /* PhotoApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADC9FF2C8F3B99007EBFEF /* PhotoApi.swift */; };
 		5DADCA022C8F3EFE007EBFEF /* Networker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADCA012C8F3EFE007EBFEF /* Networker.swift */; };
 		5DADCA042C8F4028007EBFEF /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADCA032C8F4028007EBFEF /* NetworkError.swift */; };
+		5DE194E12C921DD10073913D /* DependenciesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE194E02C921DD10073913D /* DependenciesBuilder.swift */; };
+		5DE194E32C921E3C0073913D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE194E22C921E3C0073913D /* Dependencies.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,10 +72,12 @@
 		5DADC9F52C8F3291007EBFEF /* PhotosListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosListInteractor.swift; sourceTree = "<group>"; };
 		5DADC9F72C8F32B0007EBFEF /* PhotosListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosListPresenter.swift; sourceTree = "<group>"; };
 		5DADC9F92C8F3949007EBFEF /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
-		5DADC9FC2C8F3AFD007EBFEF /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		5DADC9FC2C8F3AFD007EBFEF /* UnsplashDtos.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnsplashDtos.swift; sourceTree = "<group>"; };
 		5DADC9FF2C8F3B99007EBFEF /* PhotoApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoApi.swift; sourceTree = "<group>"; };
 		5DADCA012C8F3EFE007EBFEF /* Networker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networker.swift; sourceTree = "<group>"; };
 		5DADCA032C8F4028007EBFEF /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		5DE194E02C921DD10073913D /* DependenciesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependenciesBuilder.swift; sourceTree = "<group>"; };
+		5DE194E22C921E3C0073913D /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +215,7 @@
 				5D8AD4E22C8DFEF1007F1026 /* SearchQueriesService.swift */,
 				5DADC9F92C8F3949007EBFEF /* ImageService.swift */,
 				5D11C00D2C904B140054E1A4 /* StorageService.swift */,
+				5DE194E02C921DD10073913D /* DependenciesBuilder.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -240,7 +245,8 @@
 		5DADC9FB2C8F3AF5007EBFEF /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				5DADC9FC2C8F3AFD007EBFEF /* Photo.swift */,
+				5DADC9FC2C8F3AFD007EBFEF /* UnsplashDtos.swift */,
+				5DE194E22C921E3C0073913D /* Dependencies.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -342,7 +348,7 @@
 				5D3DDE922C8C954F00E532BB /* PhotosDetailsViewController.swift in Sources */,
 				5D11C0182C90C8F20054E1A4 /* LoadingFooterView.swift in Sources */,
 				5D3DDE772C8C8CB700E532BB /* SceneDelegate.swift in Sources */,
-				5DADC9FD2C8F3AFD007EBFEF /* Photo.swift in Sources */,
+				5DADC9FD2C8F3AFD007EBFEF /* UnsplashDtos.swift in Sources */,
 				5D43589E2C920BA3001E60C1 /* PhotoDetailsBuilder.swift in Sources */,
 				5DA6E0FF2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift in Sources */,
 				5DADC9F62C8F3291007EBFEF /* PhotosListInteractor.swift in Sources */,
@@ -350,9 +356,11 @@
 				5DA6E1092C8DDA32004C175D /* PhotosListViewController + UITableViewDelegate.swift in Sources */,
 				5DADC9FA2C8F3949007EBFEF /* ImageService.swift in Sources */,
 				5DADCA002C8F3B99007EBFEF /* PhotoApi.swift in Sources */,
+				5DE194E12C921DD10073913D /* DependenciesBuilder.swift in Sources */,
 				5DADCA042C8F4028007EBFEF /* NetworkError.swift in Sources */,
 				5DA6E0FD2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift in Sources */,
 				5DADC9F82C8F32B0007EBFEF /* PhotosListPresenter.swift in Sources */,
+				5DE194E32C921E3C0073913D /* Dependencies.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

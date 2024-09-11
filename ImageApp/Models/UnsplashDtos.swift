@@ -1,5 +1,5 @@
 //
-//  Photo.swift
+//  UnsplashDtos.swift
 //  ImageApp
 //
 //  Created by Egor Kruglov on 09.09.2024.
