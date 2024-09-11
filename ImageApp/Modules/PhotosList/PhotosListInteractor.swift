@@ -12,6 +12,8 @@ protocol PhotosListInteractorProtocol: ImageProviderProtocol {
     func searchPhotosMatching(_ query: String)
     func saveSearchQuery(_ query: String)
     func getSavedQueries(filteredBy text: String?)
+    
+    func loadRandomPhotosTo(dataSource: DataSource)
 }
 
 final class PhotosListInteractor: PhotosListInteractorProtocol {
@@ -66,6 +68,22 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
         }
         
         presentrer.process(queries.filter { $0.lowercased().contains(text.lowercased()) } )
+    }
+    
+    
+    
+    
+    
+    
+    func loadRandomPhotosTo(dataSource: DataSource) {
+        Task {
+            do {
+                let photos = try await imageService.loadRandomPhotos()
+                await presentrer.process(photos, to: .existing, isMoreAvailable: true)
+            } catch {
+                await presentrer.process(error)
+            }
+        }
     }
 }
 
