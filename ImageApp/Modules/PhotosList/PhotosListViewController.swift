@@ -22,6 +22,7 @@ final class PhotosListViewController: UIViewController {
     
     var isFetchingMoreData: Bool = false
     private var isGridLayout: Bool = false
+    private var shouldShowFooterActivityIndicator: Bool = true
     private var isRandomPhotosMode: Bool = true
     
     private(set) lazy var searchController: UISearchController = {
@@ -133,6 +134,10 @@ extension PhotosListViewController {
             self.searchSuggestionsTableView.alpha = showPhotos ? 0 : 1
         }
     }
+    func footerActivityIndicator(shouldHide: Bool) {
+        shouldShowFooterActivityIndicator = !shouldHide
+        photosCollectionView.setCollectionViewLayout(makeCollectionViewLayout(), animated: true)
+    }
 }
 
 private extension PhotosListViewController {
@@ -160,16 +165,18 @@ private extension PhotosListViewController {
         
         section.interGroupSpacing = 16
         
-        let footerSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .absolute(50)
-        )
-        let footer = NSCollectionLayoutBoundarySupplementaryItem(
-            layoutSize: footerSize,
-            elementKind: UICollectionView.elementKindSectionFooter,
-            alignment: .bottom
-        )
-        section.boundarySupplementaryItems = [footer]
+        if shouldShowFooterActivityIndicator {
+            let footerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .absolute(50)
+            )
+            let footer = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: footerSize,
+                elementKind: UICollectionView.elementKindSectionFooter,
+                alignment: .bottom
+            )
+            section.boundarySupplementaryItems = [footer]
+        }
         
         return UICollectionViewCompositionalLayout(section: section)
     }
