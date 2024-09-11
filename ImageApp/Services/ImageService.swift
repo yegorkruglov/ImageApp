@@ -9,6 +9,7 @@ import Foundation
 protocol ImageServiceProtocol {
     func showRandomPhotos() async throws -> [Photo]
     func loadImageFor(_ urlString: String) async throws -> Data
+    func searchPhotosMatching(_ query: String, page: Int) async throws -> SearchResult
 }
 
 final class ImageService: ImageServiceProtocol {
@@ -22,6 +23,9 @@ final class ImageService: ImageServiceProtocol {
     
     func showRandomPhotos() async throws -> [Photo] {
         try await api.getRandomPhotos()
+    }
+    func searchPhotosMatching(_ query: String, page: Int) async throws -> SearchResult {
+        try await api.searchPhotosMatching(query, page: page)
     }
     
     func loadImageFor(_ urlString: String) async throws -> Data {

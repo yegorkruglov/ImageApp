@@ -10,6 +10,7 @@ import Foundation
 protocol PhotoApiProtocol {
     func getRandomPhotos() async throws -> [Photo]
     func loadImageDataFor(_ urlString: String) async throws -> Data
+    func searchPhotosMatching(_ query: String, page: Int) async throws -> SearchResult
 }
 
 final class UnsplashApi: PhotoApiProtocol {
@@ -34,6 +35,12 @@ final class UnsplashApi: PhotoApiProtocol {
         return try await networker.perfomRequest(urlRequest)
     }
     
+    func searchPhotosMatching(_ query: String, page: Int) async throws -> SearchResult {
+        let urlRequest = try prepareUrlRequest(to: .search(query, page))
+        let searchResult: SearchResult = try await networker.perfomRequest(urlRequest)
+        return searchResult
+    }
+    
     private func prepareUrlRequest(to request: UnsplashApi.Request) throws -> URLRequest {
         var urlString: String {
             switch request {
@@ -45,8 +52,13 @@ final class UnsplashApi: PhotoApiProtocol {
         }
         var urlComponents = URLComponents(string: urlString)
         
-        if request == .loadRandomPhotos {
-            urlComponents?.queryItems = request.parameters.map { URLQueryItem(name: $0, value: $1) }
+        switch request {
+        case .loadImageDataFrom(_):
+            break
+        default:
+            urlComponents?.queryItems = request.parameters.map {
+                URLQueryItem(name: $0, value: $1)
+            }
         }
         
         guard let url = urlComponents?.url else { throw NetworkError.invalidUrl }
@@ -66,7 +78,7 @@ extension UnsplashApi {
     enum Request: Equatable {
         case loadRandomPhotos
         case loadImageDataFrom(String)
-        case search(query: String)
+        case search(String, Int)
         
         var httpMethod: String { "GET" }
         
@@ -74,8 +86,8 @@ extension UnsplashApi {
             switch self {
             case .loadRandomPhotos:
                 "photos/random"
-            case let .search(query):
-                "\(query)"
+            case .search(_, _):
+                "search/photos"
             case .loadImageDataFrom(_):
                 String()
             }
@@ -85,7 +97,7 @@ extension UnsplashApi {
             switch self {
             case .loadRandomPhotos:
                 [:]
-            case .search(_), .loadImageDataFrom(_):
+            case .search(_, _), .loadImageDataFrom(_):
                 [:]
             }
         }
@@ -94,7 +106,13 @@ extension UnsplashApi {
             switch self {
             case .loadRandomPhotos:
                 ["count": "30"]
-            case .search(_), .loadImageDataFrom(_):
+            case let .search(query, page):
+                [
+                    "query": "\(query)",
+                    "per_page": "30",
+                    "page": "\(page)"
+                ]
+            case .loadImageDataFrom(_):
                 [:]
             }
         }

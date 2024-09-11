@@ -67,8 +67,8 @@ final class PhotoCell: UICollectionViewCell {
     
     func configureWith(_ photo: Photo) {
         nameLabel.text = photo.description
-        authorLabel.text = "by \(photo.user?.username ?? "unknown user")"
-        guard let urlString = photo.urls?.thumb else { return }
+        authorLabel.text = "by \(photo.user.username)"
+        guard let urlString = photo.urls.thumb else { return }
         self.urlString = urlString
         setImage(urlString)
     }

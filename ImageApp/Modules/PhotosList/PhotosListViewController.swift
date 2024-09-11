@@ -134,6 +134,15 @@ extension PhotosListViewController {
             self.searchSuggestionsTableView.alpha = showPhotos ? 0 : 1
         }
     }
+    
+    func drainPhotosDataSource() {
+        var snapshot = photosDataSource.snapshot()
+        snapshot.deleteAllItems()
+        snapshot.appendSections([.main])
+        snapshot.appendItems([], toSection: .main)
+        photosDataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
     func footerActivityIndicator(shouldHide: Bool) {
         shouldShowFooterActivityIndicator = !shouldHide
         photosCollectionView.setCollectionViewLayout(makeCollectionViewLayout(), animated: true)

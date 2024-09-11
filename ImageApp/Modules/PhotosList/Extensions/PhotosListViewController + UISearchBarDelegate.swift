@@ -9,11 +9,14 @@ import UIKit
 
 extension PhotosListViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = searchBar.text, !text.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty else { return }
+        guard 
+            let text = searchBar.text,
+            !text.trimmingCharacters(in: CharacterSet.whitespaces).isEmpty
+        else { return }
         
-        self.interactor.saveSearchQuery(text)
-        
-        // network job
+        interactor.saveSearchQuery(text)
+        drainPhotosDataSource()
+        interactor.searchPhotosMatching(text)
         
         toggleViews(showPhotos: true)
     }

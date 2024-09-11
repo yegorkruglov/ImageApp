@@ -10,7 +10,12 @@ import Foundation
 final class PhotosListBuilder {
     static func build() -> PhotosListViewController{
         let presenter = PhotosListPresenter()
-        let networker = Networker(session: URLSession.shared, decoder: JSONDecoder())
+        let decoder = {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return decoder
+        }()
+        let networker = Networker(session: URLSession.shared, decoder: decoder)
         let api = UnsplashApi(
             networker: networker,
             baseUrl: "https://api.unsplash.com/",

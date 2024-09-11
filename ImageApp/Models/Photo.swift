@@ -7,33 +7,18 @@
 
 import Foundation
 
+// MARK: - SearchResult
+struct SearchResult: Codable {
+    let total, totalPages: Int
+    let results: [Photo]
+}
+
+// MARK: - Photo
 struct Photo: Codable, Hashable {
-    let id, slug: String?
-    let createdAt, updatedAt, promotedAt: Date?
-    let width, height: Int?
+    let id: String
     let description: String?
-    let urls: Urls?
-    let user: User?
-    let exif: Exif?
-    let location: Location?
-}
-
-// MARK: - Exif
-struct Exif: Codable, Hashable {
-    let make, model, name, exposureTime: String?
-    let aperture, focalLength: String?
-    let iso: Int?
-}
-
-// MARK: - Location
-struct Location: Codable, Hashable {
-    let name, city, country: String?
-    let position: Position?
-}
-
-// MARK: - Position
-struct Position: Codable, Hashable {
-    let latitude, longitude: Double?
+    let urls: Urls
+    let user: User
 }
 
 // MARK: - Urls
@@ -44,14 +29,5 @@ struct Urls: Codable, Hashable {
 
 // MARK: - User
 struct User: Codable, Hashable {
-    let username, name, firstName: String?
-    let lastName, twitterUsername: String?
-    let instagramUsername: String?
-    let social: Social?
-}
-
-// MARK: - Social
-struct Social: Codable, Hashable {
-    let instagramUsername: String?
-    let twitterUsername: String?
+    let username: String
 }

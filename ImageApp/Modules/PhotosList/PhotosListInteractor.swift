@@ -9,6 +9,7 @@ import Foundation
 
 protocol PhotosListInteractorProtocol: ImageProviderProtocol {
     func viewDidLoad()
+    func searchPhotosMatching(_ query: String)
     func saveSearchQuery(_ query: String)
     func getSavedQueries(filteredBy text: String?)
 }
@@ -17,6 +18,7 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
     private let presentrer: PhotosListPresenterProtocol
     private let imageService: ImageServiceProtocol
     private let searchQueriesService: SearchQueriesServiceProtocol
+    private var pageToDownload = 1
     
     init(
         presentrer: PhotosListPresenterProtocol,
@@ -33,6 +35,18 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
             do {
                 let photos = try await imageService.showRandomPhotos()
                 await presentrer.process(photos)
+            } catch {
+                await presentrer.process(error)
+            }
+        }
+    }
+    
+    func searchPhotosMatching(_ query: String) {
+        Task {
+            do {
+                let searchResult = try await imageService.searchPhotosMatching(query, page: pageToDownload)
+                
+                await presentrer.process(searchResult.results)
             } catch {
                 await presentrer.process(error)
             }
