@@ -8,19 +8,23 @@
 import Foundation
 
 protocol PhotosListInteractorProtocol: ImageProviderProtocol {
-    func viewDidLoad()
-    func searchPhotosMatching(_ query: String)
     func saveSearchQuery(_ query: String)
     func getSavedQueries(filteredBy text: String?)
-    
-    func loadRandomPhotosTo(dataSource: DataSource)
+    func loadMoreRandomPhotos()
+    func loadMorePhotosFor(query: String?)
 }
 
 final class PhotosListInteractor: PhotosListInteractorProtocol {
     private let presentrer: PhotosListPresenterProtocol
     private let imageService: ImageServiceProtocol
     private let searchQueriesService: SearchQueriesServiceProtocol
-    private var pageToDownload = 1
+    
+    private var randomPhotos: [Photo] = []
+    private var queryPhotos: [Photo] = []
+    
+    private var lastQuery: String?
+    private var pageToDownload: Int = 1
+    private var totalPages: Int?
     
     init(
         presentrer: PhotosListPresenterProtocol,
@@ -32,28 +36,7 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
         self.searchQueriesService = searchQueriesService
     }
     
-    func viewDidLoad() {
-        Task {
-            do {
-                let photos = try await imageService.loadRandomPhotos()
-                await presentrer.process(photos, morePhotosAvailable: true)
-            } catch {
-                await presentrer.process(error)
-            }
-        }
-    }
-    
-    func searchPhotosMatching(_ query: String) {
-        Task {
-            do {
-                let searchResult = try await imageService.searchPhotosMatching(query, page: pageToDownload)
-                
-                await presentrer.process(searchResult.results, morePhotosAvailable: true)
-            } catch {
-                await presentrer.process(error)
-            }
-        }
-    }
+    // MARK: -  queries
     
     func saveSearchQuery(_ query: String) {
         searchQueriesService.saveQuery(query)
@@ -67,19 +50,51 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
             return
         }
         
-        presentrer.process(queries.filter { $0.lowercased().contains(text.lowercased()) } )
+        presentrer.process(queries.filter { $0.lowercased().contains(text.lowercased()) })
     }
     
+    // MARK: - photos load
     
-    
-    
-    
-    
-    func loadRandomPhotosTo(dataSource: DataSource) {
+    func loadMoreRandomPhotos() {
         Task {
             do {
                 let photos = try await imageService.loadRandomPhotos()
-                await presentrer.process(photos, to: .existing, isMoreAvailable: true)
+                await MainActor.run {
+                    for photo in photos {
+                        if !randomPhotos.contains(photo) { randomPhotos.append(photo) }
+                    }
+                }
+                await presentrer.process(randomPhotos, isMorePhotosAvailable: true)
+            } catch {
+                await presentrer.process(error)
+            }
+        }
+    }
+    
+    func loadMorePhotosFor(query: String?) {
+        guard let query else { return }
+        
+        if lastQuery != query {
+            lastQuery = query
+            pageToDownload = 1
+            totalPages = nil
+            queryPhotos = []
+        }
+        
+        Task {
+            do {
+                let searchResult = try await imageService.searchPhotosMatching(lastQuery, page: pageToDownload)
+                if searchResult.results.isEmpty { throw AppError.emptyResultFromApi }
+                
+                let isMorePhotosAvailable = pageToDownload < searchResult.totalPages
+                
+                await MainActor.run {
+                    if isMorePhotosAvailable { pageToDownload += 1 }
+                    totalPages = searchResult.totalPages
+                    queryPhotos.append(contentsOf: searchResult.results)
+                }
+                
+                await presentrer.process(queryPhotos, isMorePhotosAvailable: isMorePhotosAvailable)
             } catch {
                 await presentrer.process(error)
             }

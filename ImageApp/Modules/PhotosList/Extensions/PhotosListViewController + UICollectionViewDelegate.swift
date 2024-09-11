@@ -16,15 +16,17 @@ extension PhotosListViewController: UICollectionViewDelegate {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
+        let limit = UIScreen.main.bounds.height / 2
         
         guard
-            offsetY > contentHeight - height - 100,
-            !isFetchingMoreData,
-            isMorePhotosAvailable
+            offsetY > contentHeight - height - limit,
+            !isFetchingMoreData
         else { return }
         
         isFetchingMoreData = true
-        updateLayout()
-//        interactor.loadMorePhotos()
+        
+        searchController.isActive
+        ? interactor.loadMorePhotosFor(query: formattedQuery)
+        : interactor.loadMoreRandomPhotos()
     }
 }

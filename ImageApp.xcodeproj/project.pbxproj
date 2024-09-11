@@ -19,6 +19,7 @@
 		5D3DDE922C8C954F00E532BB /* PhotosDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3DDE912C8C954F00E532BB /* PhotosDetailsViewController.swift */; };
 		5D3DDE952C8CA19700E532BB /* UICollectionViewCell + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3DDE942C8CA19700E532BB /* UICollectionViewCell + Extension.swift */; };
 		5D3DDE972C8CA2D400E532BB /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3DDE962C8CA2D400E532BB /* PhotoCell.swift */; };
+		5D43589C2C91F6BE001E60C1 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D43589B2C91F6BE001E60C1 /* AppError.swift */; };
 		5D8AD4E32C8DFEF1007F1026 /* SearchQueriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AD4E22C8DFEF1007F1026 /* SearchQueriesService.swift */; };
 		5DA6E0FD2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA6E0FC2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift */; };
 		5DA6E0FF2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA6E0FE2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift */; };
@@ -37,7 +38,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5D11C00D2C904B140054E1A4 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StorageService.swift; path = ImageApp/Services/StorageService/StorageService.swift; sourceTree = "<group>"; };
+		5D11C00D2C904B140054E1A4 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		5D11C0152C90C7250054E1A4 /* PhotosListViewController + Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosListViewController + Models.swift"; sourceTree = "<group>"; };
 		5D11C0172C90C8F20054E1A4 /* LoadingFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingFooterView.swift; sourceTree = "<group>"; };
 		5D3DDE712C8C8CB700E532BB /* ImageApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,6 +52,7 @@
 		5D3DDE912C8C954F00E532BB /* PhotosDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosDetailsViewController.swift; sourceTree = "<group>"; };
 		5D3DDE942C8CA19700E532BB /* UICollectionViewCell + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionViewCell + Extension.swift"; sourceTree = "<group>"; };
 		5D3DDE962C8CA2D400E532BB /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		5D43589B2C91F6BE001E60C1 /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
 		5D8AD4E22C8DFEF1007F1026 /* SearchQueriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueriesService.swift; sourceTree = "<group>"; };
 		5DA6E0FC2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosListViewController + UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		5DA6E0FE2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosListViewController + UISearchBarDelegate.swift"; sourceTree = "<group>"; };
@@ -82,7 +84,6 @@
 		5D3DDE682C8C8CB700E532BB = {
 			isa = PBXGroup;
 			children = (
-				5D11C00D2C904B140054E1A4 /* StorageService.swift */,
 				5D3DDE732C8C8CB700E532BB /* ImageApp */,
 				5D3DDE722C8C8CB700E532BB /* Products */,
 			);
@@ -104,6 +105,7 @@
 				5D3DDE8B2C8C8D2F00E532BB /* Modules */,
 				5DADC9FB2C8F3AF5007EBFEF /* Models */,
 				5D8AD4E12C8DFE71007F1026 /* Services */,
+				5D43589A2C91F6AD001E60C1 /* Common */,
 				5D3DDE892C8C8CE700E532BB /* Resources */,
 				5D3DDE8A2C8C8CFA00E532BB /* Storyboards */,
 				5D3DDE932C8CA17900E532BB /* Extensions */,
@@ -184,12 +186,21 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		5D43589A2C91F6AD001E60C1 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				5D43589B2C91F6BE001E60C1 /* AppError.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		5D8AD4E12C8DFE71007F1026 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				5DADC9FE2C8F3B86007EBFEF /* Networking */,
 				5D8AD4E22C8DFEF1007F1026 /* SearchQueriesService.swift */,
 				5DADC9F92C8F3949007EBFEF /* ImageService.swift */,
+				5D11C00D2C904B140054E1A4 /* StorageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -308,6 +319,7 @@
 				5DA6E1072C8DD69B004C175D /* UITableViewCell + Extension.swift in Sources */,
 				5D8AD4E32C8DFEF1007F1026 /* SearchQueriesService.swift in Sources */,
 				5DADCA022C8F3EFE007EBFEF /* Networker.swift in Sources */,
+				5D43589C2C91F6BE001E60C1 /* AppError.swift in Sources */,
 				5DA6E1032C8DCF27004C175D /* PhotosListViewController + UISearchControllerDelegate.swift in Sources */,
 				5D3DDE972C8CA2D400E532BB /* PhotoCell.swift in Sources */,
 				5D11C00E2C904B140054E1A4 /* StorageService.swift in Sources */,

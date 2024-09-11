@@ -103,7 +103,7 @@ final class PhotosListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        interactor.viewDidLoad()
+        interactor.loadMoreRandomPhotos()
     }
     
     override func viewSafeAreaInsetsDidChange() {
@@ -115,12 +115,13 @@ final class PhotosListViewController: UIViewController {
 }
 
 extension PhotosListViewController {
-    func display(_ snapshot: PhotosSnapshot, morePhotosAvailable: Bool) {
+    func display(_ snapshot: PhotosSnapshot, isMorePhotosAvailable: Bool) {
         photosDataSource.apply(snapshot, animatingDifferences: true)
-        if !morePhotosAvailable {
-            isFetchingMoreData = false
-            updateLayout()
-        }
+        
+        self.isMorePhotosAvailable = isMorePhotosAvailable
+        self.isFetchingMoreData = false
+        
+        if !isMorePhotosAvailable { updateLayout() }
     }
     
     func display(_ snapshot: QueriesSnapshot) {
@@ -174,7 +175,7 @@ private extension PhotosListViewController {
         
         section.interGroupSpacing = 16
         
-        if isFetchingMoreData {
+        if isMorePhotosAvailable {
             let footerSize = NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1.0),
                 heightDimension: .absolute(50)

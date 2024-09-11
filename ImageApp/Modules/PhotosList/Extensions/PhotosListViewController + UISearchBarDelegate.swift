@@ -8,7 +8,7 @@
 import UIKit
 
 extension PhotosListViewController: UISearchBarDelegate {
-    private var formattedText: String? {
+    var formattedQuery: String? {
         guard
             let text = searchController.searchBar.text,
             text.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count >= 3
@@ -18,10 +18,10 @@ extension PhotosListViewController: UISearchBarDelegate {
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        guard let text = formattedText else { return }
+        guard let text = formattedQuery else { return }
         interactor.saveSearchQuery(text)
         drainPhotosDataSource()
-        interactor.searchPhotosMatching(text)
+        interactor.loadMorePhotosFor(query: text)
         
         toggleViews(showPhotos: true)
     }

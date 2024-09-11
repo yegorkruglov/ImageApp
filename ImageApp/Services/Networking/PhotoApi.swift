@@ -10,7 +10,7 @@ import Foundation
 protocol PhotoApiProtocol {
     func getRandomPhotos() async throws -> [Photo]
     func loadImageDataFor(_ urlString: String) async throws -> Data
-    func searchPhotosMatching(_ query: String, page: Int) async throws -> SearchResult
+    func searchPhotosMatching(_ query: String?, page: Int) async throws -> SearchResult
 }
 
 final class UnsplashApi: PhotoApiProtocol {
@@ -35,7 +35,8 @@ final class UnsplashApi: PhotoApiProtocol {
         return try await networker.perfomRequest(urlRequest)
     }
     
-    func searchPhotosMatching(_ query: String, page: Int) async throws -> SearchResult {
+    func searchPhotosMatching(_ query: String?, page: Int) async throws -> SearchResult {
+        guard let query else { throw AppError.invalidQuery}
         let urlRequest = try prepareUrlRequest(to: .search(query, page))
         let searchResult: SearchResult = try await networker.perfomRequest(urlRequest)
         return searchResult
