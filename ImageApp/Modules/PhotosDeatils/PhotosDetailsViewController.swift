@@ -23,13 +23,20 @@ final class PhotosDetailsViewController: UIViewController {
         scrollView.maximumZoomScale = 5
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.isHidden = true
         return scrollView
     }()
     
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
-        view.image = UIImage(systemName: "star")
+        return view
+    }()
+    
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.hidesWhenStopped = true
+        view.startAnimating()
         return view
     }()
     
@@ -72,6 +79,8 @@ extension PhotosDetailsViewController {
     
     func display(_ image: UIImage) {
         imageView.image = image
+        activityIndicator.stopAnimating()
+        scrollView.isHidden = false
     }
 }
 
@@ -90,7 +99,7 @@ private extension PhotosDetailsViewController {
     
     func addViews() {
         scrollView.addSubview(imageView)
-        [scrollView].forEach { subview in
+        [scrollView, activityIndicator].forEach { subview in
             view.addSubview(subview)
             subview.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -106,8 +115,10 @@ private extension PhotosDetailsViewController {
                 scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
                 scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
                 scrollView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
-                scrollView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
-               
+                scrollView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor),
+                
+                activityIndicator.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor),
+                activityIndicator.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor)
             ]
         )
     }
