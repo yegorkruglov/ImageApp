@@ -103,6 +103,12 @@ final class PhotosListViewController: UIViewController {
         interactor.loadMoreRandomPhotos()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = true
+
+    }
+    
     override func viewSafeAreaInsetsDidChange() {
         super.viewSafeAreaInsetsDidChange()
         UIView.animate(withDuration: 0.1) {

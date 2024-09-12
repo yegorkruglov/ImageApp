@@ -54,6 +54,10 @@ final class PhotosDetailsViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         interactor.loadImage()
@@ -64,7 +68,6 @@ final class PhotosDetailsViewController: UIViewController {
 extension PhotosDetailsViewController {
     func configureWith(_ photo: Photo) {
         interactor.configureWith(photo)
-        title = photo.description
     }
     
     func display(_ image: UIImage) {
