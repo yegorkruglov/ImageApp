@@ -82,6 +82,10 @@ extension PhotosDetailsViewController {
         activityIndicator.stopAnimating()
         scrollView.isHidden = false
     }
+    
+    func display(_ info: String) {
+        showInfoAlert(photoInfo: info)
+    }
 }
 
 extension PhotosDetailsViewController: UIScrollViewDelegate {
@@ -95,6 +99,7 @@ private extension PhotosDetailsViewController {
         addViews()
         setupViews()
         makeConstraints()
+        setupNavBarButtons()
     }
     
     func addViews() {
@@ -121,5 +126,37 @@ private extension PhotosDetailsViewController {
                 activityIndicator.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor)
             ]
         )
+    }
+    
+    func setupNavBarButtons() {
+        let InfoButton = makeBarButton(image: "info.circle", action: interactor.requestedInfo)
+        let DownloadButton = makeBarButton(image: "arrow.down.circle", action: nil)
+        let ShareButton = makeBarButton(image: "square.and.arrow.up.circle", action: nil)
+        
+        navigationItem.rightBarButtonItems = [InfoButton, DownloadButton, ShareButton]
+    }
+    
+    func makeBarButton(image: String, action: (() -> Void)?) -> UIBarButtonItem{
+        let action = UIAction { _ in
+            action?()
+        }
+        
+        let button = UIBarButtonItem(
+            image: UIImage(systemName: image),
+            primaryAction: action
+        )
+        
+        return button
+    }
+    
+    func showInfoAlert(photoInfo: String) {
+        let alertController = UIAlertController(
+            title: "Info",
+            message: photoInfo,
+            preferredStyle: .actionSheet
+        )
+        alertController.addAction(UIAlertAction.init(title: "Close", style: .default))
+        
+        present(alertController, animated: true)
     }
 }

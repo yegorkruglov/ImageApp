@@ -10,6 +10,7 @@ import Foundation
 protocol PhotoDetailsInteractorProtocol {
     func configureWith(_ photo: Photo)
     func loadImage()
+    func requestedInfo()
 }
 
 final class PhotoDetailsInteractor: PhotoDetailsInteractorProtocol, ImageProviderProtocol {
@@ -44,5 +45,10 @@ final class PhotoDetailsInteractor: PhotoDetailsInteractorProtocol, ImageProvide
     
     func loadImageFor(_ urlString: String) async throws -> Data {
         try await imageService.loadImageFor(urlString)
+    }
+    
+    func requestedInfo() {
+        guard let photo else { return }
+        presenter.process(photo)
     }
 }
