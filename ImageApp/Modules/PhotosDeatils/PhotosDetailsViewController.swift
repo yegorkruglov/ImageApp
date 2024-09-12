@@ -16,6 +16,16 @@ final class PhotosDetailsViewController: UIViewController {
     
     // MARK: - ui elements
     
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.delegate = self
+        scrollView.minimumZoomScale = 1
+        scrollView.maximumZoomScale = 5
+        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
+        return scrollView
+    }()
+    
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
@@ -47,16 +57,24 @@ final class PhotosDetailsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         interactor.loadImage()
+        imageView.frame = scrollView.bounds
     }
 }
 
 extension PhotosDetailsViewController {
     func configureWith(_ photo: Photo) {
         interactor.configureWith(photo)
+        title = photo.description
     }
     
     func display(_ image: UIImage) {
         imageView.image = image
+    }
+}
+
+extension PhotosDetailsViewController: UIScrollViewDelegate {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        imageView
     }
 }
 
@@ -68,7 +86,8 @@ private extension PhotosDetailsViewController {
     }
     
     func addViews() {
-        [imageView].forEach { subview in
+        scrollView.addSubview(imageView)
+        [scrollView].forEach { subview in
             view.addSubview(subview)
             subview.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -81,12 +100,12 @@ private extension PhotosDetailsViewController {
     func makeConstraints() {
         NSLayoutConstraint.activate(
             [
-                imageView.topAnchor.constraint(equalTo: self.view.topAnchor),
-                imageView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                imageView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-                imageView.rightAnchor.constraint(equalTo: self.view.rightAnchor)
+                scrollView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
+                scrollView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+                scrollView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor),
+                scrollView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor)
+               
             ]
         )
-        
     }
 }
