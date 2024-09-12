@@ -29,7 +29,7 @@ final class ImageService: ImageServiceProtocol {
     }
     
     func loadImageFor(_ urlString: String) async throws -> Data {
-        if let savedData = storageService.loadDataFor(urlString) {
+        if let savedData = try storageService.loadDataFor(urlString) {
             return savedData
         }
         let imageData = try await api.loadImageDataFor(urlString)

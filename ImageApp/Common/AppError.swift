@@ -12,4 +12,5 @@ enum AppError: Error {
     case emptyResultFromApi
     case invalidQuery
     case noAccessToPhotoLibrary
+    case failedSaving
 }
