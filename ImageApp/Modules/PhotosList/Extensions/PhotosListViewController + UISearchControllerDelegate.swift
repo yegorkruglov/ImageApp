@@ -14,6 +14,8 @@ extension PhotosListViewController: UISearchControllerDelegate {
     }
     
     func willDismissSearchController(_ searchController: UISearchController) {
+        isMorePhotosAvailable = true
+        updateLayout()
         toggleViews(showPhotos: true)
     }
 }

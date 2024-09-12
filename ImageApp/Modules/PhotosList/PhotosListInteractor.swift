@@ -89,7 +89,6 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
         Task {
             do {
                 let searchResult = try await imageService.searchPhotosMatching(lastQuery, page: pageToDownload)
-                if searchResult.results.isEmpty { throw AppError.emptyResultFromApi }
                 
                 let isMorePhotosAvailable = pageToDownload < searchResult.totalPages
                 
@@ -100,6 +99,7 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
                 }
                 
                 await presentrer.process(queryPhotos, isMorePhotosAvailable: isMorePhotosAvailable)
+                if searchResult.results.isEmpty { throw AppError.emptyResultFromApi }
             } catch {
                 await presentrer.process(error)
             }
