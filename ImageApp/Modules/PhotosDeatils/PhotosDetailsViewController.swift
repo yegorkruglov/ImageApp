@@ -91,6 +91,10 @@ extension PhotosDetailsViewController {
     func receiveImageToShare(_ image: UIImage) {
         shareImage(image, from: self)
     }
+    
+    func display(_ error: Error) {
+        
+    }
 }
 
 extension PhotosDetailsViewController: UIScrollViewDelegate {
@@ -134,7 +138,7 @@ private extension PhotosDetailsViewController {
     
     func setupNavBarButtons() {
         let InfoButton = makeBarButton(image: "info.circle", action: interactor.requestedInfo)
-        let DownloadButton = makeBarButton(image: "arrow.down.circle", action: nil)
+        let DownloadButton = makeBarButton(image: "arrow.down.circle", action: interactor.requestedToSaveImage)
         let ShareButton = makeBarButton(image: "square.and.arrow.up.circle", action: interactor.requesteImageToShare)
         
         navigationItem.setRightBarButtonItems([InfoButton, DownloadButton, ShareButton], animated: true)

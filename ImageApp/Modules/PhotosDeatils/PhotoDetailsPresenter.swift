@@ -6,12 +6,14 @@
 //
 
 import UIKit
+import Photos
 
 protocol PhotoDetailsPresenterProtocol {
     func process(_ error: Error) async 
     func process(_ imageData: Data) async 
     func process(_ photo: Photo)
     func requesteImageToShare()
+    func requestedToSaveImage()
 }
 
 final class PhotoDetailsPresenter: PhotoDetailsPresenterProtocol {
@@ -53,6 +55,30 @@ final class PhotoDetailsPresenter: PhotoDetailsPresenterProtocol {
     func requesteImageToShare() {
         guard let image else { return }
         viewController?.receiveImageToShare(image)
+    }
+    
+    func requestedToSaveImage() {
+        guard let image else { return }
+        saveImageToPhotoLibrary(image: image)
+    }
+
+    private func saveImageToPhotoLibrary(image: UIImage) {
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+            if status == .authorized {
+                PHPhotoLibrary.shared().performChanges({
+                    PHAssetChangeRequest.creationRequestForAsset(from: image)
+                }) { [weak self] success, error in
+                    if success {
+//                        self?.viewController?.notify(_ )
+                    } else if let error = error {
+                        self?.viewController?.display(error)
+                    }
+                }
+            } else {
+                let error = AppError.noAccessToPhotoLibrary
+                self?.viewController?.display(error)
+            }
+        }
     }
     
     private func formatDate(from text: String) -> String {

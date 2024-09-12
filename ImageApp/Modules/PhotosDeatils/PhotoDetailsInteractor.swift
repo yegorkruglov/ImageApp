@@ -12,6 +12,7 @@ protocol PhotoDetailsInteractorProtocol {
     func loadImage()
     func requestedInfo()
     func requesteImageToShare()
+    func requestedToSaveImage()
 }
 
 final class PhotoDetailsInteractor: PhotoDetailsInteractorProtocol, ImageProviderProtocol {
@@ -55,5 +56,9 @@ final class PhotoDetailsInteractor: PhotoDetailsInteractorProtocol, ImageProvide
     
     func requesteImageToShare() {
         presenter.requesteImageToShare()
+    }
+    
+    func requestedToSaveImage() {
+        presenter.requestedToSaveImage()
     }
 }

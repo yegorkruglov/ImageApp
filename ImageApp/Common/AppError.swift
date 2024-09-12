@@ -11,4 +11,5 @@ enum AppError: Error {
     case networkError(NetworkError)
     case emptyResultFromApi
     case invalidQuery
+    case noAccessToPhotoLibrary
 }
