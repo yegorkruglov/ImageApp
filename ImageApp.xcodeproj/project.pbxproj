@@ -23,6 +23,8 @@
 		5D43589E2C920BA3001E60C1 /* PhotoDetailsBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D43589D2C920BA3001E60C1 /* PhotoDetailsBuilder.swift */; };
 		5D4358A02C920C1F001E60C1 /* PhotoDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D43589F2C920C1F001E60C1 /* PhotoDetailsInteractor.swift */; };
 		5D4358A22C920C53001E60C1 /* PhotoDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D4358A12C920C53001E60C1 /* PhotoDetailsPresenter.swift */; };
+		5D5C64E22C93374A00C0AA70 /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C64E12C93374A00C0AA70 /* ErrorHandler.swift */; };
+		5D5C64E42C9337BA00C0AA70 /* UIViewController + displayAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D5C64E32C9337BA00C0AA70 /* UIViewController + displayAlert.swift */; };
 		5D8AD4E32C8DFEF1007F1026 /* SearchQueriesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8AD4E22C8DFEF1007F1026 /* SearchQueriesService.swift */; };
 		5DA6E0FD2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA6E0FC2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift */; };
 		5DA6E0FF2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA6E0FE2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift */; };
@@ -61,6 +63,8 @@
 		5D43589D2C920BA3001E60C1 /* PhotoDetailsBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsBuilder.swift; sourceTree = "<group>"; };
 		5D43589F2C920C1F001E60C1 /* PhotoDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsInteractor.swift; sourceTree = "<group>"; };
 		5D4358A12C920C53001E60C1 /* PhotoDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailsPresenter.swift; sourceTree = "<group>"; };
+		5D5C64E12C93374A00C0AA70 /* ErrorHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		5D5C64E32C9337BA00C0AA70 /* UIViewController + displayAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + displayAlert.swift"; sourceTree = "<group>"; };
 		5D8AD4E22C8DFEF1007F1026 /* SearchQueriesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchQueriesService.swift; sourceTree = "<group>"; };
 		5DA6E0FC2C8DCEFF004C175D /* PhotosListViewController + UICollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosListViewController + UICollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		5DA6E0FE2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotosListViewController + UISearchBarDelegate.swift"; sourceTree = "<group>"; };
@@ -195,6 +199,7 @@
 			children = (
 				5D3DDE942C8CA19700E532BB /* UICollectionViewCell + Extension.swift */,
 				5DA6E1062C8DD69B004C175D /* UITableViewCell + Extension.swift */,
+				5D5C64E32C9337BA00C0AA70 /* UIViewController + displayAlert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -204,6 +209,7 @@
 			children = (
 				5D43589B2C91F6BE001E60C1 /* AppError.swift */,
 				5DADCA032C8F4028007EBFEF /* NetworkError.swift */,
+				5D5C64E12C93374A00C0AA70 /* ErrorHandler.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -351,10 +357,12 @@
 				5DADC9FD2C8F3AFD007EBFEF /* UnsplashDtos.swift in Sources */,
 				5D43589E2C920BA3001E60C1 /* PhotoDetailsBuilder.swift in Sources */,
 				5DA6E0FF2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift in Sources */,
+				5D5C64E22C93374A00C0AA70 /* ErrorHandler.swift in Sources */,
 				5DADC9F62C8F3291007EBFEF /* PhotosListInteractor.swift in Sources */,
 				5D11C0162C90C7250054E1A4 /* PhotosListViewController + Models.swift in Sources */,
 				5DA6E1092C8DDA32004C175D /* PhotosListViewController + UITableViewDelegate.swift in Sources */,
 				5DADC9FA2C8F3949007EBFEF /* ImageService.swift in Sources */,
+				5D5C64E42C9337BA00C0AA70 /* UIViewController + displayAlert.swift in Sources */,
 				5DADCA002C8F3B99007EBFEF /* PhotoApi.swift in Sources */,
 				5DE194E12C921DD10073913D /* DependenciesBuilder.swift in Sources */,
 				5DADCA042C8F4028007EBFEF /* NetworkError.swift in Sources */,

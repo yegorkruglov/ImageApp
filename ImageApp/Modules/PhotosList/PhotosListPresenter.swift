@@ -19,6 +19,8 @@ final class PhotosListPresenter: PhotosListPresenterProtocol {
     
     func process(_ error: Error) async {
         
+        let (title, description) = ErrorHandler.prepareAlertInfoFrom(error)
+        await viewController?.displayErrorAlert(title, description)
     }
     
     func process(_ savedQueries: [String]) {
