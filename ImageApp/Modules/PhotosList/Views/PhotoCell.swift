@@ -19,7 +19,13 @@ final class PhotoCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
-        view.image = UIImage(systemName: "questionmark")
+        view.isHidden = true
+        return view
+    }()
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let view = UIActivityIndicatorView(style: .medium)
+        view.hidesWhenStopped = true
+        view.startAnimating()
         return view
     }()
     private lazy var nameLabel: UILabel = {
@@ -61,6 +67,7 @@ final class PhotoCell: UICollectionViewCell {
         imageProvider = nil
         urlString = nil
         imageView.image = nil
+        activityIndicator.startAnimating()
         nameLabel.text = nil
         authorLabel.text = nil
     }
@@ -73,7 +80,7 @@ final class PhotoCell: UICollectionViewCell {
         setImage(urlString)
     }
     private func setupUI() {
-        [imageView, stackView].forEach { subview in
+        [imageView, activityIndicator, stackView].forEach { subview in
             contentView.addSubview(subview)
             subview.translatesAutoresizingMaskIntoConstraints = false
             
@@ -85,11 +92,16 @@ final class PhotoCell: UICollectionViewCell {
                 imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
                 imageView.leftAnchor.constraint(equalTo: self.leftAnchor),
                 imageView.rightAnchor.constraint(equalTo: self.rightAnchor),
+                
+                activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor),
+                
                 stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
                 stackView.leftAnchor.constraint(equalTo: self.leftAnchor),
                 stackView.rightAnchor.constraint(equalTo: self.rightAnchor)
             ]
         )
+        
         contentView.layer.cornerRadius = 16
         contentView.layer.masksToBounds = true
     }
@@ -99,7 +111,9 @@ final class PhotoCell: UICollectionViewCell {
             guard let imageData = try await imageProvider?.loadImageFor(urlString) else { return }
             await MainActor.run {
                 if urlString == self.urlString {
+                    activityIndicator.stopAnimating()
                     imageView.image = UIImage(data: imageData)
+                    imageView.isHidden = false
                 }
             }
         }
