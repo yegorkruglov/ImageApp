@@ -81,10 +81,15 @@ extension PhotosDetailsViewController {
         imageView.image = image
         activityIndicator.stopAnimating()
         scrollView.isHidden = false
+        setupNavBarButtons()
     }
     
     func display(_ info: String) {
         showInfoAlert(photoInfo: info)
+    }
+    
+    func receiveImageToShare(_ image: UIImage) {
+        shareImage(image, from: self)
     }
 }
 
@@ -99,7 +104,6 @@ private extension PhotosDetailsViewController {
         addViews()
         setupViews()
         makeConstraints()
-        setupNavBarButtons()
     }
     
     func addViews() {
@@ -131,9 +135,9 @@ private extension PhotosDetailsViewController {
     func setupNavBarButtons() {
         let InfoButton = makeBarButton(image: "info.circle", action: interactor.requestedInfo)
         let DownloadButton = makeBarButton(image: "arrow.down.circle", action: nil)
-        let ShareButton = makeBarButton(image: "square.and.arrow.up.circle", action: nil)
+        let ShareButton = makeBarButton(image: "square.and.arrow.up.circle", action: interactor.requesteImageToShare)
         
-        navigationItem.rightBarButtonItems = [InfoButton, DownloadButton, ShareButton]
+        navigationItem.setRightBarButtonItems([InfoButton, DownloadButton, ShareButton], animated: true)
     }
     
     func makeBarButton(image: String, action: (() -> Void)?) -> UIBarButtonItem{
@@ -158,5 +162,15 @@ private extension PhotosDetailsViewController {
         alertController.addAction(UIAlertAction.init(title: "Close", style: .default))
         
         present(alertController, animated: true)
+    }
+    
+    func shareImage(_ image: UIImage, from viewController: UIViewController) {
+        let imageToShare = [image]
+        
+        let activityViewController = UIActivityViewController(activityItems: imageToShare, applicationActivities: nil)
+        
+        activityViewController.popoverPresentationController?.sourceView = viewController.view
+        
+        viewController.present(activityViewController, animated: true, completion: nil)
     }
 }

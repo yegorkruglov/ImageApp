@@ -11,10 +11,12 @@ protocol PhotoDetailsPresenterProtocol {
     func process(_ error: Error) async 
     func process(_ imageData: Data) async 
     func process(_ photo: Photo)
+    func requesteImageToShare()
 }
 
 final class PhotoDetailsPresenter: PhotoDetailsPresenterProtocol {
     weak var viewController: PhotosDetailsViewController?
+    private var image: UIImage?
     private var info: String?
     
     func process(_ error: Error) async  {
@@ -22,7 +24,13 @@ final class PhotoDetailsPresenter: PhotoDetailsPresenterProtocol {
     }
     
     func process(_ imageData: Data) async  {
+        if let image {
+            await viewController?.display(image)
+            return
+        }
+        
         guard let image = UIImage(data: imageData) else { return }
+        self.image = image
         await viewController?.display(image)
     }
     
@@ -40,6 +48,11 @@ final class PhotoDetailsPresenter: PhotoDetailsPresenterProtocol {
         ].compactMap { $0 }.joined(separator: "\n")
         
         viewController?.display(info)
+    }
+    
+    func requesteImageToShare() {
+        guard let image else { return }
+        viewController?.receiveImageToShare(image)
     }
     
     private func formatDate(from text: String) -> String {

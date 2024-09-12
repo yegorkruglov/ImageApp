@@ -11,6 +11,7 @@ protocol PhotoDetailsInteractorProtocol {
     func configureWith(_ photo: Photo)
     func loadImage()
     func requestedInfo()
+    func requesteImageToShare()
 }
 
 final class PhotoDetailsInteractor: PhotoDetailsInteractorProtocol, ImageProviderProtocol {
@@ -50,5 +51,9 @@ final class PhotoDetailsInteractor: PhotoDetailsInteractorProtocol, ImageProvide
     func requestedInfo() {
         guard let photo else { return }
         presenter.process(photo)
+    }
+    
+    func requesteImageToShare() {
+        presenter.requesteImageToShare()
     }
 }
