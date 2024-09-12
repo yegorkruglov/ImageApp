@@ -32,9 +32,29 @@ final class PhotoDetailsPresenter: PhotoDetailsPresenterProtocol {
             return
         }
         
-        let info = """
+        let date = formatDate(from: photo.createdAt)
+        let info = [
+            photo.description,
+            "by: \(photo.user.username)",
+            "posted: \(date)"
+        ].compactMap { $0 }.joined(separator: "\n")
         
-        """
         viewController?.display(info)
+    }
+    
+    private func formatDate(from text: String) -> String {
+        let isoFormatter = DateFormatter()
+        isoFormatter.locale = Locale(identifier: "en_US_POSIX")
+        isoFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        
+        guard let date = isoFormatter.date(from: text) else { return text }
+
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "dd MMMM yyyy"
+        outputFormatter.locale = Locale(identifier: "en_US")
+        
+        let formattedDate = outputFormatter.string(from: date)
+        
+        return formattedDate
     }
 }

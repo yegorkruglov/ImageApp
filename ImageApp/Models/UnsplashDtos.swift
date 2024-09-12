@@ -17,6 +17,7 @@ struct SearchResult: Codable {
 struct Photo: Codable, Hashable {
     let id: String
     let description: String?
+    let createdAt: String
     let urls: Urls
     let user: User
 }
