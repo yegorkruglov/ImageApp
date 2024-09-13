@@ -20,7 +20,8 @@ extension PhotosListViewController: UICollectionViewDelegate {
         
         guard
             offsetY > contentHeight - height - limit,
-            !isFetchingMoreData
+            !isFetchingMoreData,
+            isMorePhotosAvailable
         else { return }
         
         isFetchingMoreData = true

@@ -42,6 +42,7 @@
 		5DADCA042C8F4028007EBFEF /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DADCA032C8F4028007EBFEF /* NetworkError.swift */; };
 		5DE194E12C921DD10073913D /* DependenciesBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE194E02C921DD10073913D /* DependenciesBuilder.swift */; };
 		5DE194E32C921E3C0073913D /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE194E22C921E3C0073913D /* Dependencies.swift */; };
+		5DEF7EA02C94CEBB003A8FB2 /* Array + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DEF7E9F2C94CEBB003A8FB2 /* Array + Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -82,6 +83,7 @@
 		5DADCA032C8F4028007EBFEF /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		5DE194E02C921DD10073913D /* DependenciesBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependenciesBuilder.swift; sourceTree = "<group>"; };
 		5DE194E22C921E3C0073913D /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
+		5DEF7E9F2C94CEBB003A8FB2 /* Array + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 				5D3DDE942C8CA19700E532BB /* UICollectionViewCell + Extension.swift */,
 				5DA6E1062C8DD69B004C175D /* UITableViewCell + Extension.swift */,
 				5D5C64E32C9337BA00C0AA70 /* UIViewController + displayAlert.swift */,
+				5DEF7E9F2C94CEBB003A8FB2 /* Array + Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -355,6 +358,7 @@
 				5D11C0182C90C8F20054E1A4 /* LoadingFooterView.swift in Sources */,
 				5D3DDE772C8C8CB700E532BB /* SceneDelegate.swift in Sources */,
 				5DADC9FD2C8F3AFD007EBFEF /* UnsplashDtos.swift in Sources */,
+				5DEF7EA02C94CEBB003A8FB2 /* Array + Extension.swift in Sources */,
 				5D43589E2C920BA3001E60C1 /* PhotoDetailsBuilder.swift in Sources */,
 				5DA6E0FF2C8DCF0F004C175D /* PhotosListViewController + UISearchBarDelegate.swift in Sources */,
 				5D5C64E22C93374A00C0AA70 /* ErrorHandler.swift in Sources */,

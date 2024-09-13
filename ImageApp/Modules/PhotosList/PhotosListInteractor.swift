@@ -62,9 +62,7 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
                 let photos = try await imageService.loadRandomPhotos()
                 await MainActor.run {
                     if !randomPhotos.isEmpty {
-                        for photo in photos {
-                            if !randomPhotos.contains(photo) { randomPhotos.append(photo) }
-                        }
+                        randomPhotos.addUniquesFrom(photos)
                     } else {
                         randomPhotos = photos
                     }
@@ -95,7 +93,7 @@ final class PhotosListInteractor: PhotosListInteractorProtocol {
                 await MainActor.run {
                     if isMorePhotosAvailable { pageToDownload += 1 }
                     totalPages = searchResult.totalPages
-                    queryPhotos.append(contentsOf: searchResult.results)
+                    queryPhotos.addUniquesFrom(searchResult.results)
                 }
                 
                 await presentrer.process(queryPhotos, isMorePhotosAvailable: isMorePhotosAvailable)
